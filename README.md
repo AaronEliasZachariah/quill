@@ -6,6 +6,61 @@
 
 Handy is a cross-platform desktop application that provides simple, privacy-focused speech transcription. Press a shortcut, speak, and have your words appear in any text field. This happens on your own computer without sending any information to the cloud.
 
+---
+
+## handy-pro fork — App-aware "Pro" post-processing
+
+This fork ([AaronEliasZachariah/handy-pro](https://github.com/AaronEliasZachariah/handy-pro)) adds an
+**app-aware post-processing layer** on top of Handy's existing LLM cleanup — a free, local
+alternative to Wispr Flow's "format for the app I'm in" behavior. When you dictate, handy-pro looks
+at the app you're focused on (Windows), picks a **profile** for it, and formats the cleaned text to
+match: code/commands in your editor or terminal, a structured email in Outlook, a quick line in
+Slack, prose in a doc, and so on.
+
+It is **additive and off by default**. With it off, behavior is identical to upstream Handy. On any
+error or timeout, the raw transcript is used — dictation never stalls.
+
+What it adds:
+
+- **Foreground-app detection (Windows)** → a user-editable **app → profile** rules table
+  (process / window-title patterns).
+- **Per-profile prompts** (code, email, chat, notes, list, browser, generic) layered on a shared
+  cleanup instruction (remove fillers, false starts, spoken repetitions; fix dictation errors).
+- **Ollama by default** (free + private, runs locally) with optional cloud providers
+  (OpenAI / Anthropic / OpenRouter / Groq / …) reusing Handy's existing provider settings.
+- A **vocabulary** map for terms the speech model mangles (seeded with `Parakeet`, `Claude Code`, …).
+- A **latency timeout** (default 4 s) with raw-transcript fallback.
+- A **live test panel** — paste raw dictation, pick a profile, see the cleaned result without dictating.
+
+### Setup (free + local, recommended)
+
+1. **Install [Ollama](https://ollama.com/download)** and pull a small instruct model:
+
+   ```bash
+   ollama pull llama3.2:3b
+   ```
+
+   Ollama serves an OpenAI-compatible API at `http://localhost:11434/v1`, which handy-pro uses by
+   default. A larger model (e.g. `qwen2.5:7b-instruct`) follows the formatting instructions more
+   faithfully if you have the headroom — set it under Post-processing → provider model.
+
+2. In Handy: **Advanced → enable Post-processing**, then open the **Post Process** tab and turn on
+   **App-aware cleanup**. Use the **Live test** panel to tune profiles/rules/vocabulary, then dictate
+   with the post-processing shortcut (default `Ctrl+Shift+Space`).
+
+### Setup (cloud provider, optional)
+
+In the **Post Process** tab pick a provider (OpenAI, Anthropic, OpenRouter, Groq, …), paste your API
+key, and choose a model. Everything else (profiles, rules, vocabulary, live test) works the same.
+
+> Building this fork from source on Windows uses CPU whisper by default so it builds without the
+> Vulkan SDK — see [DECISIONS.md](DECISIONS.md) (decision **D**, build notes) to restore GPU whisper.
+> The post-processing feature is independent of the transcription backend.
+
+See **[DECISIONS.md](DECISIONS.md)** for the full integration plan and design decisions.
+
+---
+
 ## Why Handy?
 
 Handy was created to fill the gap for a truly open source, extensible speech-to-text tool. As stated on [handy.computer](https://handy.computer):
