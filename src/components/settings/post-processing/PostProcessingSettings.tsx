@@ -21,6 +21,15 @@ import { ModelSelect } from "../PostProcessingSettingsApi/ModelSelect";
 import { usePostProcessProviderState } from "../PostProcessingSettingsApi/usePostProcessProviderState";
 import { ShortcutInput } from "../ShortcutInput";
 import { useSettings } from "../../../hooks/useSettings";
+import {
+  ProAppAwareToggle,
+  ProProfilesEditor,
+  ProAppRulesEditor,
+  ProDefaultProfile,
+  ProVocabularyEditor,
+  ProLatencyControl,
+  ProLiveTest,
+} from "../pro";
 
 const PostProcessingSettingsApiComponent: React.FC = () => {
   const { t } = useTranslation();
@@ -426,6 +435,8 @@ PostProcessingSettingsPrompts.displayName = "PostProcessingSettingsPrompts";
 
 export const PostProcessingSettings: React.FC = () => {
   const { t } = useTranslation();
+  const { getSetting } = useSettings();
+  const proEnabled = getSetting("pro_app_aware_enabled") ?? false;
 
   return (
     <div className="max-w-3xl w-full mx-auto space-y-6">
@@ -444,6 +455,42 @@ export const PostProcessingSettings: React.FC = () => {
       <SettingsGroup title={t("settings.postProcessing.prompts.title")}>
         <PostProcessingSettingsPrompts />
       </SettingsGroup>
+
+      {/* handy-pro: app-aware "Pro" post-processing layer */}
+      <SettingsGroup
+        title={t("settings.postProcessing.pro.title")}
+        description={t("settings.postProcessing.pro.description")}
+      >
+        <ProAppAwareToggle grouped={true} />
+      </SettingsGroup>
+
+      {proEnabled && (
+        <>
+          <SettingsGroup title={t("settings.postProcessing.pro.test.title")}>
+            <ProLiveTest />
+          </SettingsGroup>
+
+          <SettingsGroup title={t("settings.postProcessing.pro.profiles.title")}>
+            <ProProfilesEditor />
+          </SettingsGroup>
+
+          <SettingsGroup
+            title={t("settings.postProcessing.pro.rules.title")}
+            description={t("settings.postProcessing.pro.rules.description")}
+          >
+            <ProDefaultProfile />
+            <ProAppRulesEditor />
+          </SettingsGroup>
+
+          <SettingsGroup title={t("settings.postProcessing.pro.vocab.title")}>
+            <ProVocabularyEditor />
+          </SettingsGroup>
+
+          <SettingsGroup title={t("settings.postProcessing.pro.latency.title")}>
+            <ProLatencyControl />
+          </SettingsGroup>
+        </>
+      )}
     </div>
   );
 };

@@ -6,6 +6,9 @@ import type {
   AudioDevice,
   WhisperAcceleratorSetting,
   OrtAcceleratorSetting,
+  ProProfile,
+  ProAppRule,
+  ProVocabEntry,
 } from "@/bindings";
 import { commands } from "@/bindings";
 
@@ -133,6 +136,15 @@ const settingUpdaters: {
     commands.changePostProcessEnabledSetting(value as boolean),
   post_process_selected_prompt_id: (value) =>
     commands.setPostProcessSelectedPrompt(value as string),
+  // handy-pro: app-aware Pro layer
+  pro_app_aware_enabled: (value) =>
+    commands.setProAppAwareEnabled(value as boolean),
+  pro_profiles: (value) => commands.setProProfiles(value as ProProfile[]),
+  pro_app_rules: (value) => commands.setProAppRules(value as ProAppRule[]),
+  pro_default_profile: (value) =>
+    commands.setProDefaultProfile(value as string),
+  pro_vocabulary: (value) => commands.setProVocabulary(value as ProVocabEntry[]),
+  pro_timeout_ms: (value) => commands.setProTimeoutMs(value as number),
   mute_while_recording: (value) =>
     commands.changeMuteWhileRecordingSetting(value as boolean),
   append_trailing_space: (value) =>
