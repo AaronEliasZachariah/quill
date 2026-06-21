@@ -176,9 +176,13 @@ unchanged.** With `pro_app_aware_enabled = false` the code path is upstream-iden
   vocabulary fixups applied (`Parakeet`, `Claude Code`). Note: a 3B model occasionally adds stray
   meta text; a stronger model (e.g. `qwen2.5:7b-instruct`) follows the "output only the text"
   instruction more reliably — documented in the README.
-- **Runtime:** the debug binary launches and runs the tauri-specta export cleanly (exit 0). A full
-  interactive GUI click-through needs the separately-installed release Handy closed first (both
-  share one bundle identifier; the single-instance plugin otherwise forwards to the running copy).
+- **Runtime (GUI):** ran `tauri dev` and drove the app — enabled Post-processing, opened the
+  **Post Process** tab, turned on **App-aware cleanup**, switched the provider to **Ollama (local)**
+  (model auto-filled `llama3.2:3b`), and ran the **live test** with the *Code / Terminal* profile.
+  The CLEANED panel returned `Refactor the \`getUser\` function in \`auth.ts\` and add a null check
+  for the email before calling \`trim()\`` — confirming the full GUI → command → Ollama → cleaned
+  output path. (Running the dev build needs the separately-installed release Handy closed first;
+  both share one bundle identifier.)
 
 _Status of this document: living record, updated as milestones land. M0–M5 complete and pushed to
 `AaronEliasZachariah/handy-pro`._
