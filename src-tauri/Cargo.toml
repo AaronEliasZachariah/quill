@@ -54,7 +54,7 @@ rubato = "0.16.2"
 hound = "3.5.1"
 log = "0.4.25"
 env_filter = "0.1.0"
-tokio = "1.43.0"
+tokio = { version = "1.43.0", features = ["time"] }
 vad-rs = { git = "https://github.com/cjpais/vad-rs", default-features = false }
 enigo = "0.6.1"
 rodio = { git = "https://github.com/cjpais/rodio.git" }
@@ -88,13 +88,20 @@ tauri-plugin-single-instance = "2.3.2"
 tauri-plugin-updater = "2.10.0"
 
 [target.'cfg(windows)'.dependencies]
-transcribe-rs = { version = "0.3.3", features = ["whisper-vulkan", "ort-directml"] }
+# handy-pro dev note: upstream uses ["whisper-vulkan", "ort-directml"], which requires the
+# Vulkan SDK (VULKAN_SDK) to *build*. To keep the fork building on a dev machine without admin
+# (the Vulkan SDK installer needs elevation), we build whisper on CPU here ("whisper-cpp" comes
+# from the base transcribe-rs dependency). ONNX/Parakeet still uses DirectML GPU via ort-directml.
+# To restore GPU whisper: install the Vulkan SDK and change this back to
+#   features = ["whisper-vulkan", "ort-directml"]
+transcribe-rs = { version = "0.3.3", features = ["ort-directml"] }
 windows = { version = "0.61.3", features = [
   "Win32_Media_Audio_Endpoints",
   "Win32_System_Com_StructuredStorage",
   "Win32_System_Variant",
   "Win32_Foundation",
   "Win32_UI_WindowsAndMessaging",
+  "Win32_System_Threading",
 ] }
 winreg = "0.55"
 
