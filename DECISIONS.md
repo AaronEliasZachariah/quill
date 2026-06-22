@@ -155,15 +155,43 @@ unchanged.** With `pro_app_aware_enabled = false` the code path is upstream-iden
 ## 5. Toolchain / build notes (Windows)
 
 - Rust stable (rustup, MSVC), Bun, cmake, VS Build Tools 2022 (C++), WebView2 runtime.
-- Windows `transcribe-rs` features are `whisper-vulkan` + `ort-directml`; building does **not**
-  require the Vulkan SDK (prebuilt backend binaries; runtime `vulkan-1.dll` ships with GPU
-  drivers).
+- Windows `transcribe-rs` uses `whisper-vulkan` + `ort-directml`. Building **`whisper-vulkan` from
+  source DOES require the Vulkan SDK** (`whisper-rs-sys` compiles whisper.cpp's Vulkan backend +
+  the `vulkan-shaders-gen` tool). For a CPU-only dev build that compiles without the SDK, drop
+  `whisper-vulkan` from the Windows `transcribe-rs` features (whisper falls back to CPU; ONNX/
+  Parakeet still uses DirectML GPU). `whisper-rs-sys` also needs **libclang** for bindgen
+  (`LIBCLANG_PATH`; the `libclang` pip wheel works with no admin).
 - Dev model asset: `src-tauri/resources/models/silero_vad_v4.onnx` (downloaded from
   `blob.handy.computer`).
-- `bun.lock` + `postinstall` use Bun; `cargo build` (debug) regenerates `src/bindings.ts`.
+- `bun.lock` + `postinstall` use Bun; a **debug** `cargo build`/`tauri dev` regenerates
+  `src/bindings.ts` (tauri-specta export is gated on `#[cfg(debug_assertions)]` inside `run()`).
 - The installed release Handy and a `tauri dev` build share one bundle identifier; the
   single-instance plugin will focus the running copy instead of launching dev. Quit the
   installed Handy before `tauri dev` to run the dev build.
+
+### Building the Windows release installer (GPU whisper) — `tauri build`
+
+The GPU release build is finicky on Windows; the working recipe (all in one env):
+
+1. **Vulkan SDK** installed, `VULKAN_SDK` set (e.g. `C:\VulkanSDK\1.4.350.0`).
+2. Run inside the **MSVC dev env**: `call .../VC/Auxiliary/Build/vcvars64.bat` so `cl.exe` is on
+   PATH — whisper.cpp's `vulkan-shaders-gen` ExternalProject probes the compiler via PATH.
+3. `set CMAKE_GENERATOR=Ninja` — the VS/MSBuild generator fails the nested shader-gen's compiler
+   detection ("No CMAKE_C_COMPILER"); Ninja works. (Ninja ships with VS Build Tools' CMake-tools.)
+4. `set CARGO_TARGET_DIR=C:\hpb` (any **short** path) — whisper.cpp's nested Vulkan build paths
+   exceed the **260-char `MAX_PATH`** under the normal repo target dir, causing
+   `fatal error C1041: cannot open program database`.
+5. `set LIBCLANG_PATH=...\clang\native` (libclang wheel).
+6. `bun run tauri build --bundles nsis` → `C:\hpb\release\bundle\nsis\Handy Pro_*-setup.exe`.
+
+### Rebrand for distribution (v0.9.0-beta)
+
+To ship without colliding with official Handy: `tauri.conf.json` productName → **Handy Pro**,
+identifier → `com.aaronelias.handypro` (separate install / data dir / single-instance), window
+title → "Handy Pro". Removed CJ's Azure `signCommand` (builds **unsigned** → SmartScreen warning)
+and repointed the updater off cjpais/Handy with `createUpdaterArtifacts: false` (signed auto-update
+would need a new minisign keypair — TODO). The MIT `LICENSE` + CJ Pais copyright are preserved.
+Deeper cosmetic rebranding (tray text, logo SVGs, remaining "Handy" UI strings) is a follow-up.
 
 ## 6. Verification (2026-06-22)
 

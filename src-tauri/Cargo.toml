@@ -88,13 +88,10 @@ tauri-plugin-single-instance = "2.3.2"
 tauri-plugin-updater = "2.10.0"
 
 [target.'cfg(windows)'.dependencies]
-# handy-pro dev note: upstream uses ["whisper-vulkan", "ort-directml"], which requires the
-# Vulkan SDK (VULKAN_SDK) to *build*. To keep the fork building on a dev machine without admin
-# (the Vulkan SDK installer needs elevation), we build whisper on CPU here ("whisper-cpp" comes
-# from the base transcribe-rs dependency). ONNX/Parakeet still uses DirectML GPU via ort-directml.
-# To restore GPU whisper: install the Vulkan SDK and change this back to
-#   features = ["whisper-vulkan", "ort-directml"]
-transcribe-rs = { version = "0.3.3", features = ["ort-directml"] }
+# GPU whisper (Vulkan) + DirectML ONNX, matching upstream. Building requires the Vulkan SDK
+# (the VULKAN_SDK env var must point at the install). For a CPU-only dev build that compiles
+# without the SDK, drop "whisper-vulkan" so whisper uses the CPU backend from the base dependency.
+transcribe-rs = { version = "0.3.3", features = ["whisper-vulkan", "ort-directml"] }
 windows = { version = "0.61.3", features = [
   "Win32_Media_Audio_Endpoints",
   "Win32_System_Com_StructuredStorage",
