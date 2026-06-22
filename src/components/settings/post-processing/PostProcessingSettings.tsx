@@ -19,7 +19,7 @@ import { BaseUrlField } from "../PostProcessingSettingsApi/BaseUrlField";
 import { ApiKeyField } from "../PostProcessingSettingsApi/ApiKeyField";
 import { ModelSelect } from "../PostProcessingSettingsApi/ModelSelect";
 import { usePostProcessProviderState } from "../PostProcessingSettingsApi/usePostProcessProviderState";
-import { ShortcutInput } from "../ShortcutInput";
+import { PostProcessingToggle } from "../PostProcessingToggle";
 import { useSettings } from "../../../hooks/useSettings";
 import {
   ProAppAwareToggle,
@@ -436,35 +436,38 @@ PostProcessingSettingsPrompts.displayName = "PostProcessingSettingsPrompts";
 export const PostProcessingSettings: React.FC = () => {
   const { t } = useTranslation();
   const { getSetting } = useSettings();
+  const enabled = getSetting("post_process_enabled") ?? false;
   const proEnabled = getSetting("pro_app_aware_enabled") ?? false;
 
   return (
     <div className="max-w-3xl w-full mx-auto space-y-6">
-      <SettingsGroup title={t("settings.postProcessing.hotkey.title")}>
-        <ShortcutInput
-          shortcutId="transcribe_with_post_process"
-          descriptionMode="tooltip"
-          grouped={true}
-        />
+      {/* Enable/disable is the first thing in the panel. When on, the normal Transcribe
+          shortcut applies post-processing — there is no separate post-processing hotkey. */}
+      <SettingsGroup>
+        <PostProcessingToggle descriptionMode="tooltip" grouped={true} />
       </SettingsGroup>
 
-      <SettingsGroup title={t("settings.postProcessing.api.title")}>
-        <PostProcessingSettingsApi />
-      </SettingsGroup>
+      {!enabled ? null : (
+        <>
+          <SettingsGroup title={t("settings.postProcessing.api.title")}>
+            <PostProcessingSettingsApi />
+          </SettingsGroup>
 
-      <SettingsGroup title={t("settings.postProcessing.prompts.title")}>
-        <PostProcessingSettingsPrompts />
-      </SettingsGroup>
+          <SettingsGroup title={t("settings.postProcessing.prompts.title")}>
+            <PostProcessingSettingsPrompts />
+          </SettingsGroup>
 
-      {/* handy-pro: app-aware "Pro" post-processing layer */}
-      <SettingsGroup
-        title={t("settings.postProcessing.pro.title")}
-        description={t("settings.postProcessing.pro.description")}
-      >
-        <ProAppAwareToggle grouped={true} />
-      </SettingsGroup>
+          {/* handy-pro: app-aware "Pro" post-processing layer */}
+          <SettingsGroup
+            title={t("settings.postProcessing.pro.title")}
+            description={t("settings.postProcessing.pro.description")}
+          >
+            <ProAppAwareToggle grouped={true} />
+          </SettingsGroup>
+        </>
+      )}
 
-      {proEnabled && (
+      {enabled && proEnabled && (
         <>
           <SettingsGroup title={t("settings.postProcessing.pro.test.title")}>
             <ProLiveTest />
