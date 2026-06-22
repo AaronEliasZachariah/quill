@@ -23,8 +23,9 @@ pub fn init_shortcuts(app: &AppHandle) {
         if id == "cancel" {
             continue; // Skip cancel shortcut, it will be registered dynamically
         }
-        // Skip post-processing shortcut when the feature is disabled
-        if id == "transcribe_with_post_process" && !user_settings.post_process_enabled {
+        // handy-pro: no separate post-processing shortcut — the normal Transcribe shortcut
+        // post-processes when the toggle is on, so this binding is never registered.
+        if id == "transcribe_with_post_process" {
             continue;
         }
         let binding = user_settings

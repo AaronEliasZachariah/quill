@@ -686,7 +686,10 @@ impl ShortcutAction for TranscribeAction {
         play_feedback_sound(app, SoundType::Stop);
 
         let binding_id = binding_id.to_string(); // Clone binding_id for the async task
-        let post_process = self.post_process;
+                                                 // handy-pro: the Post-processing toggle decides whether the normal Transcribe shortcut
+                                                 // applies post-processing — there is no separate post-processing hotkey. (The CLI
+                                                 // --toggle-post-process action sets self.post_process directly.)
+        let post_process = self.post_process || get_settings(app).post_process_enabled;
 
         // handy-pro: capture the foreground app now, while the user's target window still has
         // focus (the recording overlay is non-activating, so this reflects the real target app).

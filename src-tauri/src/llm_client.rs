@@ -108,6 +108,8 @@ fn create_client(provider: &PostProcessProvider, api_key: &str) -> Result<reqwes
 /// Send a chat completion request to an OpenAI-compatible API
 /// Returns Ok(Some(content)) on success, Ok(None) if response has no content,
 /// or Err on actual errors (HTTP, parsing, etc.)
+/// Kept for parity with upstream; handy-pro's Pro path uses the system-prompt variant.
+#[allow(dead_code)]
 pub async fn send_chat_completion(
     provider: &PostProcessProvider,
     api_key: String,

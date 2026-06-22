@@ -394,8 +394,9 @@ fn register_all_shortcuts_for_implementation(
             continue;
         }
 
-        // Skip post-processing shortcut when the feature is disabled
-        if id == "transcribe_with_post_process" && !current_settings.post_process_enabled {
+        // handy-pro: no separate post-processing shortcut — the normal Transcribe shortcut
+        // post-processes when the toggle is on, so this binding is never registered.
+        if id == "transcribe_with_post_process" {
             continue;
         }
 
