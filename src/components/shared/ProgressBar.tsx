@@ -53,7 +53,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
             )}
             {showSpeed && item.speed !== undefined && item.speed > 0 ? (
               // eslint-disable-next-line i18next/no-literal-string
-              <span>{item.speed.toFixed(1)}MB/s</span>
+              <span className="font-mono">{item.speed.toFixed(1)}MB/s</span>
             ) : showSpeed ? (
               <span>Downloading...</span>
             ) : null}

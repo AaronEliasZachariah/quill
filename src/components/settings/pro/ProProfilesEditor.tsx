@@ -22,7 +22,7 @@ const Switch: React.FC<{
       onChange={(e) => onChange(e.target.checked)}
       aria-label={ariaLabel}
     />
-    <div className="relative w-11 h-6 bg-mid-gray/20 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-logo-primary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-background-ui peer-disabled:opacity-50"></div>
+    <div className="relative w-11 h-6 bg-mid-gray/25 peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-logo-primary/40 peer-focus-visible:ring-offset-1 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:shadow-sm after:transition-all peer-checked:bg-background-ui peer-disabled:opacity-50 transition-colors"></div>
   </label>
 );
 
@@ -65,7 +65,9 @@ const ProfileRow: React.FC<{
         onBlur={commit}
         variant="compact"
         className="w-full"
-        placeholder={t("settings.postProcessing.pro.profiles.promptPlaceholder")}
+        placeholder={t(
+          "settings.postProcessing.pro.profiles.promptPlaceholder",
+        )}
       />
     </div>
   );
@@ -88,7 +90,7 @@ export const ProProfilesEditor: React.FC = () => {
   };
 
   return (
-    <div className="divide-y divide-mid-gray/20">
+    <div className="divide-y divide-mid-gray/12">
       {profiles.map((profile) => (
         <ProfileRow
           key={profile.key}

@@ -1,18 +1,20 @@
-# Handy
-
-[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/WVBeWsNXK4)
+# Quill
 
 **A free, open source, and extensible speech-to-text application that works completely offline.**
 
-Handy is a cross-platform desktop application that provides simple, privacy-focused speech transcription. Press a shortcut, speak, and have your words appear in any text field. This happens on your own computer without sending any information to the cloud.
+Quill is a cross-platform desktop application that provides simple, privacy-focused speech transcription. Press a shortcut, speak, and have your words appear in any text field. This happens on your own computer without sending any information to the cloud.
+
+> **Quill is a fork of [Handy](https://github.com/cjpais/Handy)** by cjpais. All of Handy's
+> offline transcription foundation is its work — Quill builds an app-aware post-processing layer
+> and its own product identity on top. Please support and credit the upstream project.
 
 ---
 
-## handy-pro fork — App-aware "Pro" post-processing
+## What Quill adds — App-aware "Pro" post-processing
 
-This fork ([AaronEliasZachariah/handy-pro](https://github.com/AaronEliasZachariah/handy-pro)) adds an
+Quill ([AaronEliasZachariah/quill](https://github.com/AaronEliasZachariah/quill)) adds an
 **app-aware post-processing layer** on top of Handy's existing LLM cleanup — a free, local
-alternative to Wispr Flow's "format for the app I'm in" behavior. When you dictate, handy-pro looks
+alternative to Wispr Flow's "format for the app I'm in" behavior. When you dictate, Quill looks
 at the app you're focused on (Windows), picks a **profile** for it, and formats the cleaned text to
 match: code/commands in your editor or terminal, a structured email in Outlook, a quick line in
 Slack, prose in a doc, and so on.
@@ -55,6 +57,7 @@ Post-processing speaks the **OpenAI chat API**, so any backend exposing an OpenA
    ```
 
    Ollama serves an OpenAI-compatible API at `http://localhost:11434/v1`.
+
 2. In **Post Process → Provider**, choose **Ollama (local)**. The model defaults to `llama3.2:3b`
    (use the ↻ refresh to list what you've pulled). A larger model (e.g. `qwen2.5:7b-instruct`)
    follows the formatting instructions more faithfully if you have the headroom.

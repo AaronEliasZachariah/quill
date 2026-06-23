@@ -84,22 +84,22 @@ const ModelCard: React.FC<ModelCardProps> = ({
   const formattedModelSize = formatModelSize(Number(model.size_mb));
 
   const baseClasses =
-    "flex flex-col rounded-xl px-4 py-3 gap-2 text-left transition-all duration-200";
+    "flex flex-col rounded-card px-4 py-3 gap-2 text-left transition-all duration-200";
 
   const getVariantClasses = () => {
     if (status === "active") {
-      return "border-2 border-logo-primary/50 bg-logo-primary/10";
+      return "border border-logo-primary/50 bg-logo-primary/10 shadow-sheet";
     }
     if (isFeatured) {
-      return "border-2 border-logo-primary/25 bg-logo-primary/5";
+      return "border border-logo-primary/25 bg-logo-primary/5 shadow-sheet";
     }
-    return "border-2 border-mid-gray/20";
+    return "border border-mid-gray/12 bg-surface shadow-sheet";
   };
 
   const getInteractiveClasses = () => {
     if (!isClickable) return "";
     if (disabled) return "opacity-50 cursor-not-allowed";
-    return "cursor-pointer hover:border-logo-primary/50 hover:bg-logo-primary/5 hover:shadow-lg hover:scale-[1.01] active:scale-[0.99] group";
+    return "cursor-pointer hover:border-logo-primary/50 hover:bg-logo-primary/5 hover:scale-[1.01] active:scale-[0.99] group";
   };
 
   const handleClick = () => {
@@ -195,7 +195,7 @@ const ModelCard: React.FC<ModelCardProps> = ({
         )}
       </div>
 
-      <hr className="w-full border-mid-gray/20" />
+      <hr className="w-full border-mid-gray/12" />
 
       {/* Bottom row: tags + action buttons (full width) */}
       <div className="flex items-center gap-3 w-full -mb-0.5 mt-0.5 h-5">

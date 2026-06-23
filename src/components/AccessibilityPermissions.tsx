@@ -5,15 +5,10 @@ import {
   checkAccessibilityPermission,
   requestAccessibilityPermission,
 } from "tauri-plugin-macos-permissions-api";
+import { Button } from "./ui/Button";
 
 // Define permission state type
 type PermissionState = "request" | "verify" | "granted";
-
-// Define button configuration type
-interface ButtonConfig {
-  text: string;
-  className: string;
-}
 
 const AccessibilityPermissions: React.FC = () => {
   const { t } = useTranslation();
@@ -67,37 +62,17 @@ const AccessibilityPermissions: React.FC = () => {
     return null;
   }
 
-  // Configure button text and style based on state
-  const buttonConfig: Record<PermissionState, ButtonConfig | null> = {
-    request: {
-      text: t("accessibility.openSettings"),
-      className:
-        "px-2 py-1 text-sm font-semibold bg-mid-gray/10 border  border-mid-gray/80 hover:bg-logo-primary/10 rounded cursor-pointer hover:border-logo-primary",
-    },
-    verify: {
-      text: t("accessibility.openSettings"),
-      className:
-        "bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-1 px-3 rounded-md text-sm flex items-center justify-center cursor-pointer",
-    },
-    granted: null,
-  };
-
-  const config = buttonConfig[permissionState] as ButtonConfig;
-
   return (
-    <div className="p-4 w-full rounded-lg border border-mid-gray">
+    <div className="p-4 w-full rounded-card bg-surface border border-mid-gray/12 shadow-sheet">
       <div className="flex justify-between items-center gap-2">
         <div className="">
           <p className="text-sm font-medium">
             {t("accessibility.permissionsDescription")}
           </p>
         </div>
-        <button
-          onClick={handleButtonClick}
-          className={`min-h-10 ${config.className}`}
-        >
-          {config.text}
-        </button>
+        <Button variant="secondary" size="sm" onClick={handleButtonClick}>
+          {t("accessibility.openSettings")}
+        </Button>
       </div>
     </div>
   );

@@ -46,15 +46,17 @@ const hoverBackground =
 const focusBackground =
   "color-mix(in srgb, var(--color-logo-primary) 20%, transparent)";
 const neutralBorder =
-  "color-mix(in srgb, var(--color-mid-gray) 80%, transparent)";
+  "color-mix(in srgb, var(--color-mid-gray) 25%, transparent)";
 
 const selectStyles: StylesConfig<SelectOption, false> = {
   control: (base, state) => ({
     ...base,
     minHeight: 40,
-    borderRadius: 6,
+    borderRadius: 10,
     borderColor: state.isFocused ? "var(--color-logo-primary)" : neutralBorder,
-    boxShadow: state.isFocused ? "0 0 0 1px var(--color-logo-primary)" : "none",
+    boxShadow: state.isFocused
+      ? "0 0 0 3px color-mix(in srgb, var(--color-logo-primary) 20%, transparent)"
+      : "none",
     backgroundColor: state.isFocused ? focusBackground : baseBackground,
     fontSize: "0.875rem",
     color: "var(--color-text)",
@@ -96,11 +98,13 @@ const selectStyles: StylesConfig<SelectOption, false> = {
   menu: (provided) => ({
     ...provided,
     zIndex: 30,
-    backgroundColor: "var(--color-background)",
+    borderRadius: 12,
+    overflow: "hidden",
+    backgroundColor: "var(--color-surface)",
     color: "var(--color-text)",
     border:
-      "1px solid color-mix(in srgb, var(--color-mid-gray) 30%, transparent)",
-    boxShadow: "0 10px 30px rgba(15, 15, 15, 0.2)",
+      "1px solid color-mix(in srgb, var(--color-mid-gray) 18%, transparent)",
+    boxShadow: "0 12px 34px -16px rgba(24, 22, 41, 0.4)",
   }),
   option: (base, state) => ({
     ...base,

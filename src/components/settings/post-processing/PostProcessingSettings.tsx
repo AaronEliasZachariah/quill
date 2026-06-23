@@ -354,7 +354,7 @@ const PostProcessingSettingsPromptsComponent: React.FC = () => {
         )}
 
         {!isCreating && !selectedPrompt && (
-          <div className="p-3 bg-mid-gray/5 rounded-md border border-mid-gray/20">
+          <div className="p-3 bg-mid-gray/5 rounded-lg border border-mid-gray/12">
             <p className="text-sm text-mid-gray">
               {hasPrompts
                 ? t("settings.postProcessing.prompts.selectToEdit")
@@ -489,7 +489,9 @@ export const PostProcessingSettings: React.FC = () => {
             <ProLiveTest />
           </SettingsGroup>
 
-          <SettingsGroup title={t("settings.postProcessing.pro.profiles.title")}>
+          <SettingsGroup
+            title={t("settings.postProcessing.pro.profiles.title")}
+          >
             <ProProfilesEditor />
           </SettingsGroup>
 

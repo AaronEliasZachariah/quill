@@ -64,7 +64,7 @@ export const ProLiveTest: React.FC = () => {
 
   return (
     <div className="px-4 py-3 space-y-3">
-      <div className="flex items-center justify-between gap-2 rounded-md bg-mid-gray/5 border border-mid-gray/20 px-3 py-2">
+      <div className="flex items-center justify-between gap-2 rounded-lg bg-mid-gray/5 border border-mid-gray/12 px-3 py-2">
         <div className="flex items-center gap-2 min-w-0">
           <Monitor className="w-4 h-4 text-mid-gray shrink-0" />
           <p className="text-sm truncate">
@@ -131,7 +131,7 @@ export const ProLiveTest: React.FC = () => {
             {error}
           </Alert>
         ) : (
-          <div className="px-3 py-2 min-h-[80px] text-sm whitespace-pre-wrap bg-logo-primary/5 border border-mid-gray/20 rounded-md">
+          <div className="px-3 py-2 min-h-[80px] text-sm whitespace-pre-wrap bg-logo-primary/5 border border-mid-gray/12 rounded-lg">
             {output || (
               <span className="text-mid-gray">
                 {t("settings.postProcessing.pro.test.cleanedEmpty")}

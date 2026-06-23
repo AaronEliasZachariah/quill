@@ -37,6 +37,22 @@ export const AboutSettings: React.FC = () => {
 
   return (
     <div className="max-w-3xl w-full mx-auto space-y-6">
+      <div className="bg-surface border border-mid-gray/12 rounded-card shadow-sheet px-6 py-7 text-center">
+        <h1 className="font-display text-3xl text-text leading-none">
+          {/* eslint-disable-next-line i18next/no-literal-string */}
+          <span>Quill</span>
+        </h1>
+        <p className="mt-2 text-sm text-mid-gray">
+          {t("settings.about.tagline")}
+        </p>
+        {version && (
+          <p className="mt-3 text-xs font-mono text-mid-gray">
+            {/* eslint-disable-next-line i18next/no-literal-string */}
+            <span>v{version}</span>
+          </p>
+        )}
+      </div>
+
       <SettingsGroup title={t("settings.about.title")}>
         <AppLanguageSelector descriptionMode="tooltip" grouped={true} />
         <SettingContainer

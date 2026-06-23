@@ -100,7 +100,7 @@
     },
     "permissions": {
       "title": "Необходими разрешения",
-      "description": "Handy се нуждае от няколко разрешения, за да работи правилно.",
+      "description": "Quill се нуждае от няколко разрешения, за да работи правилно.",
       "microphone": {
         "title": "Достъп до микрофон",
         "description": "Необходим е, за да чуе гласа ви при транскрипция."
@@ -117,7 +117,8 @@
         "checkFailed": "Проверката на разрешенията не бе успешна. Опитайте отново.",
         "requestFailed": "Заявката за разрешение не бе успешна. Опитайте отново."
       }
-    }
+    },
+    "proBadge": "pro"
   },
   "modelSelector": {
     "custom": "Персонализиран",
@@ -158,7 +159,7 @@
     "general": {
       "title": "Общи",
       "shortcut": {
-        "title": "Бързи клавиши на Handy",
+        "title": "Бързи клавиши на Quill",
         "description": "Настройте клавишни комбинации за стартиране на запис за реч към текст",
         "loading": "Зареждане на бързите клавиши...",
         "none": "Няма настроени бързи клавиши",
@@ -276,11 +277,11 @@
       },
       "autostart": {
         "label": "Стартиране със системата",
-        "description": "Автоматично стартиране на Handy при влизане в профила ви."
+        "description": "Автоматично стартиране на Quill при влизане в профила ви."
       },
       "showTrayIcon": {
         "label": "Икона в системната област",
-        "description": "Показване на иконата на Handy в системната област."
+        "description": "Показване на иконата на Quill в системната област."
       },
       "overlay": {
         "title": "Позиция на наслагването",
@@ -416,6 +417,66 @@
         "cancel": "Отказ",
         "selectToEdit": "Изберете подкана по-горе, за да видите и редактирате подробностите ѝ.",
         "createFirst": "Натиснете „Нова подкана“ по-горе, за да създадете първата си подкана за постобработка."
+      },
+      "warn": {
+        "noModel": "Post-processing is on, but no model is set for the selected provider. Pick or refresh a model below so it can run.",
+        "noPrompt": "Post-processing is on, but it won't run yet. Turn on App-aware cleanup, or select a prompt below."
+      },
+      "pro": {
+        "title": "App-aware cleanup (Pro)",
+        "description": "Detect the app you're dictating into and format the text to fit it — code in your editor, a proper email in Outlook, a quick line in Slack.",
+        "toggle": {
+          "label": "App-aware cleanup",
+          "description": "Pick the cleanup style from the app in focus when you dictate. Off by default; turning it off restores standard post-processing."
+        },
+        "test": {
+          "title": "Live test",
+          "detected": "Last dictation: {{app}} → {{profile}}",
+          "noneDetected": "No app detected yet. Dictate once with app-aware cleanup on, then refresh.",
+          "refresh": "Refresh detected app",
+          "run": "Clean it up",
+          "running": "Cleaning…",
+          "rawLabel": "Raw dictation",
+          "rawPlaceholder": "Paste or type messy dictation here…",
+          "cleanedLabel": "Cleaned",
+          "cleanedEmpty": "Run the test to see the cleaned result."
+        },
+        "profiles": {
+          "title": "Profiles",
+          "toggleAria": "Enable the {{name}} profile",
+          "promptPlaceholder": "Instruction for this profile…"
+        },
+        "rules": {
+          "title": "App routing",
+          "description": "Match the foreground app to a profile. The first enabled match wins; the default profile is used when nothing matches.",
+          "empty": "No rules yet. Add one to route an app to a profile.",
+          "matchProcess": "Process",
+          "matchTitle": "Title",
+          "patternPlaceholder": "e.g. code, slack, outlook",
+          "toggleAria": "Enable this rule",
+          "deleteAria": "Delete this rule",
+          "add": "Add rule"
+        },
+        "defaultProfile": {
+          "title": "Default profile",
+          "description": "Used when no rule matches the app you're dictating into."
+        },
+        "vocab": {
+          "title": "Vocabulary",
+          "empty": "No vocabulary yet. Add terms the speech model tends to get wrong.",
+          "fromPlaceholder": "Heard as…",
+          "toPlaceholder": "Should be…",
+          "deleteAria": "Delete this term",
+          "add": "Add term"
+        },
+        "latency": {
+          "title": "Speed limit",
+          "description": "How long to wait for the model before pasting the raw transcript instead, so dictation never stalls.",
+          "fast": "2s (fastest)",
+          "balanced": "4s (recommended)",
+          "quality": "8s (best quality)",
+          "none": "No limit"
+        }
       }
     },
     "history": {
@@ -445,7 +506,7 @@
       },
       "updateChecks": {
         "label": "Проверка за актуализации",
-        "description": "Автоматична проверка за нови версии на Handy"
+        "description": "Автоматична проверка за нови версии на Quill"
       },
       "soundTheme": {
         "label": "Звукова тема",
@@ -498,7 +559,9 @@
       "paths": {
         "appData": "Данни на приложението:",
         "models": "Модели:",
-        "settings": "Настройки:"
+        "settings": "Настройки:",
+        "title": "Debug Paths",
+        "description": "Display internal file paths and directories for debugging purposes"
       },
       "pasteDelay": {
         "title": "Забавяне при поставяне",
@@ -513,11 +576,11 @@
       "title": "За приложението",
       "version": {
         "title": "Версия",
-        "description": "Текуща версия на Handy"
+        "description": "Текуща версия на Quill"
       },
       "appDataDirectory": {
         "title": "Папка с данни на приложението",
-        "description": "Мястото, където Handy съхранява данните си"
+        "description": "Мястото, където Quill съхранява данните си"
       },
       "sourceCode": {
         "title": "Изходен код",
@@ -526,7 +589,7 @@
       },
       "supportDevelopment": {
         "title": "Подкрепете разработката",
-        "description": "Помогнете ни да продължим да развиваме Handy",
+        "description": "Помогнете ни да продължим да развиваме Quill",
         "button": "Дарение"
       },
       "acknowledgments": {
@@ -534,9 +597,10 @@
         "whisper": {
           "title": "Whisper.cpp",
           "description": "Високопроизводително изпълнение на автоматичния модел за разпознаване на реч Whisper на OpenAI",
-          "details": "Handy използва Whisper.cpp за бързо локално реч-към-текст. Благодарности на Georgi Gerganov и сътрудниците за отличната работа."
+          "details": "Quill използва Whisper.cpp за бързо локално реч-към-текст. Благодарности на Georgi Gerganov и сътрудниците за отличната работа."
         }
-      }
+      },
+      "tagline": "Private, on-device speech to text."
     }
   },
   "footer": {
@@ -576,11 +640,14 @@
     "off": "Изкл.",
     "yes": "Да",
     "no": "Не",
-    "noOptionsFound": "Няма намерени опции"
+    "noOptionsFound": "Няма намерени опции",
+    "copy": "Copy",
+    "copyToClipboard": "Copy to clipboard",
+    "notAvailable": "Not available"
   },
   "accessibility": {
     "permissionsRequired": "Необходими са разрешения за достъпност",
-    "permissionsDescription": "Handy се нуждае от разрешения за достъпност, за да въвежда транскрибирания текст.",
+    "permissionsDescription": "Quill се нуждае от разрешения за достъпност, за да въвежда транскрибирания текст.",
     "openSettings": "Отваряне на системните настройки",
     "dismiss": "Затваряне"
   },
@@ -603,7 +670,7 @@
   },
   "appLanguage": {
     "title": "Език на приложението",
-    "description": "Промяна на езика на интерфейса на Handy"
+    "description": "Промяна на езика на интерфейса на Quill"
   },
   "overlay": {
     "transcribing": "Транскрибиране...",

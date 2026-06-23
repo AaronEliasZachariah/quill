@@ -100,7 +100,7 @@
     },
     "permissions": {
       "title": "需要權限",
-      "description": "Handy 需要一些權限才能正常運作",
+      "description": "Quill 需要一些權限才能正常運作",
       "microphone": {
         "title": "麥克風存取",
         "description": "需要聽取您的語音進行轉錄"
@@ -117,7 +117,8 @@
         "checkFailed": "檢查權限失敗，請重試",
         "requestFailed": "請求權限失敗，請重試"
       }
-    }
+    },
+    "proBadge": "pro"
   },
   "modelSelector": {
     "custom": "自訂",
@@ -158,7 +159,7 @@
     "general": {
       "title": "一般",
       "shortcut": {
-        "title": "Handy 快捷鍵",
+        "title": "Quill 快捷鍵",
         "description": "設定啟動語音轉文字錄製的鍵盤快捷鍵",
         "loading": "載入快捷鍵中...",
         "none": "未設定快捷鍵",
@@ -276,11 +277,11 @@
       },
       "autostart": {
         "label": "開機啟動",
-        "description": "登入電腦時自動啟動 Handy"
+        "description": "登入電腦時自動啟動 Quill"
       },
       "showTrayIcon": {
         "label": "顯示系統匣圖示",
-        "description": "在系統匣中顯示 Handy 圖示"
+        "description": "在系統匣中顯示 Quill 圖示"
       },
       "overlay": {
         "title": "懸浮窗位置",
@@ -416,6 +417,66 @@
         "cancel": "取消",
         "selectToEdit": "選擇上方的提示詞以檢視和編輯其詳細資訊",
         "createFirst": "點選上方的「建立新提示詞」來建立您的第一個後處理提示詞"
+      },
+      "warn": {
+        "noModel": "Post-processing is on, but no model is set for the selected provider. Pick or refresh a model below so it can run.",
+        "noPrompt": "Post-processing is on, but it won't run yet. Turn on App-aware cleanup, or select a prompt below."
+      },
+      "pro": {
+        "title": "App-aware cleanup (Pro)",
+        "description": "Detect the app you're dictating into and format the text to fit it — code in your editor, a proper email in Outlook, a quick line in Slack.",
+        "toggle": {
+          "label": "App-aware cleanup",
+          "description": "Pick the cleanup style from the app in focus when you dictate. Off by default; turning it off restores standard post-processing."
+        },
+        "test": {
+          "title": "Live test",
+          "detected": "Last dictation: {{app}} → {{profile}}",
+          "noneDetected": "No app detected yet. Dictate once with app-aware cleanup on, then refresh.",
+          "refresh": "Refresh detected app",
+          "run": "Clean it up",
+          "running": "Cleaning…",
+          "rawLabel": "Raw dictation",
+          "rawPlaceholder": "Paste or type messy dictation here…",
+          "cleanedLabel": "Cleaned",
+          "cleanedEmpty": "Run the test to see the cleaned result."
+        },
+        "profiles": {
+          "title": "Profiles",
+          "toggleAria": "Enable the {{name}} profile",
+          "promptPlaceholder": "Instruction for this profile…"
+        },
+        "rules": {
+          "title": "App routing",
+          "description": "Match the foreground app to a profile. The first enabled match wins; the default profile is used when nothing matches.",
+          "empty": "No rules yet. Add one to route an app to a profile.",
+          "matchProcess": "Process",
+          "matchTitle": "Title",
+          "patternPlaceholder": "e.g. code, slack, outlook",
+          "toggleAria": "Enable this rule",
+          "deleteAria": "Delete this rule",
+          "add": "Add rule"
+        },
+        "defaultProfile": {
+          "title": "Default profile",
+          "description": "Used when no rule matches the app you're dictating into."
+        },
+        "vocab": {
+          "title": "Vocabulary",
+          "empty": "No vocabulary yet. Add terms the speech model tends to get wrong.",
+          "fromPlaceholder": "Heard as…",
+          "toPlaceholder": "Should be…",
+          "deleteAria": "Delete this term",
+          "add": "Add term"
+        },
+        "latency": {
+          "title": "Speed limit",
+          "description": "How long to wait for the model before pasting the raw transcript instead, so dictation never stalls.",
+          "fast": "2s (fastest)",
+          "balanced": "4s (recommended)",
+          "quality": "8s (best quality)",
+          "none": "No limit"
+        }
       }
     },
     "history": {
@@ -445,7 +506,7 @@
       },
       "updateChecks": {
         "label": "檢查更新",
-        "description": "自動檢查 Handy 的新版本"
+        "description": "自動檢查 Quill 的新版本"
       },
       "soundTheme": {
         "label": "聲音主題",
@@ -498,7 +559,9 @@
       "paths": {
         "appData": "應用程式資料:",
         "models": "模型:",
-        "settings": "設定:"
+        "settings": "設定:",
+        "title": "Debug Paths",
+        "description": "Display internal file paths and directories for debugging purposes"
       },
       "pasteDelay": {
         "title": "貼上延遲",
@@ -513,11 +576,11 @@
       "title": "關於",
       "version": {
         "title": "版本",
-        "description": "Handy 的目前版本"
+        "description": "Quill 的目前版本"
       },
       "appDataDirectory": {
         "title": "應用程式資料目錄",
-        "description": "Handy 儲存資料的位置"
+        "description": "Quill 儲存資料的位置"
       },
       "sourceCode": {
         "title": "原始碼",
@@ -526,7 +589,7 @@
       },
       "supportDevelopment": {
         "title": "支持開發",
-        "description": "幫助我們繼續開發 Handy",
+        "description": "幫助我們繼續開發 Quill",
         "button": "捐贈"
       },
       "acknowledgments": {
@@ -534,9 +597,10 @@
         "whisper": {
           "title": "Whisper.cpp",
           "description": "針對 OpenAI Whisper 自動語音識別模型的高效能推理引擎",
-          "details": "Handy 使用 Whisper.cpp 進行快速的本機語音轉文字處理。感謝 Georgi Gerganov 和貢獻者們的傑出工作"
+          "details": "Quill 使用 Whisper.cpp 進行快速的本機語音轉文字處理。感謝 Georgi Gerganov 和貢獻者們的傑出工作"
         }
-      }
+      },
+      "tagline": "Private, on-device speech to text."
     }
   },
   "footer": {
@@ -576,11 +640,14 @@
     "off": "關",
     "yes": "是",
     "no": "否",
-    "noOptionsFound": "未找到選項"
+    "noOptionsFound": "未找到選項",
+    "copy": "Copy",
+    "copyToClipboard": "Copy to clipboard",
+    "notAvailable": "Not available"
   },
   "accessibility": {
     "permissionsRequired": "需要輔助使用權限",
-    "permissionsDescription": "Handy 需要輔助使用權限才能輸入轉錄的文字",
+    "permissionsDescription": "Quill 需要輔助使用權限才能輸入轉錄的文字",
     "openSettings": "開啟系統設定",
     "dismiss": "關閉"
   },
@@ -603,7 +670,7 @@
   },
   "appLanguage": {
     "title": "應用程式語言",
-    "description": "變更 Handy 介面的語言"
+    "description": "變更 Quill 介面的語言"
   },
   "overlay": {
     "transcribing": "正在轉錄...",

@@ -1,8 +1,8 @@
 [package]
 name = "handy"
 version = "0.9.0-beta"
-description = "Handy"
-authors = ["cjpais"]
+description = "Quill"
+authors = ["cjpais", "Aaron Elias Zachariah"]
 edition = "2021"
 license = "MIT"
 default-run = "handy"

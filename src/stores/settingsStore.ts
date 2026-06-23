@@ -143,7 +143,8 @@ const settingUpdaters: {
   pro_app_rules: (value) => commands.setProAppRules(value as ProAppRule[]),
   pro_default_profile: (value) =>
     commands.setProDefaultProfile(value as string),
-  pro_vocabulary: (value) => commands.setProVocabulary(value as ProVocabEntry[]),
+  pro_vocabulary: (value) =>
+    commands.setProVocabulary(value as ProVocabEntry[]),
   pro_timeout_ms: (value) => commands.setProTimeoutMs(value as number),
   mute_while_recording: (value) =>
     commands.changeMuteWhileRecordingSetting(value as boolean),

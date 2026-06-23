@@ -100,7 +100,7 @@
     },
     "permissions": {
       "title": "Berechtigungen erforderlich",
-      "description": "Handy benötigt einige Berechtigungen, um richtig zu funktionieren.",
+      "description": "Quill benötigt einige Berechtigungen, um richtig zu funktionieren.",
       "microphone": {
         "title": "Mikrofonzugriff",
         "description": "Erforderlich, um deine Stimme für die Transkription zu hören."
@@ -117,7 +117,8 @@
         "checkFailed": "Berechtigungsprüfung fehlgeschlagen. Bitte erneut versuchen.",
         "requestFailed": "Berechtigungsanfrage fehlgeschlagen. Bitte erneut versuchen."
       }
-    }
+    },
+    "proBadge": "pro"
   },
   "modelSelector": {
     "custom": "Benutzerdefiniert",
@@ -176,7 +177,7 @@
     "general": {
       "title": "Allgemein",
       "shortcut": {
-        "title": "Handy-Tastenkürzel",
+        "title": "Quill-Tastenkürzel",
         "description": "Tastenkürzel für die Sprachaufnahme konfigurieren",
         "loading": "Tastenkürzel werden geladen...",
         "none": "Keine Tastenkürzel konfiguriert",
@@ -276,11 +277,11 @@
       },
       "autostart": {
         "label": "Beim Start ausführen",
-        "description": "Handy automatisch beim Anmelden starten."
+        "description": "Quill automatisch beim Anmelden starten."
       },
       "showTrayIcon": {
         "label": "Taskleistensymbol anzeigen",
-        "description": "Das Handy-Symbol in der Taskleiste anzeigen."
+        "description": "Das Quill-Symbol in der Taskleiste anzeigen."
       },
       "overlay": {
         "title": "Overlay-Position",
@@ -416,6 +417,66 @@
         "cancel": "Abbrechen",
         "selectToEdit": "Wähle oben einen Prompt aus, um dessen Details anzuzeigen und zu bearbeiten.",
         "createFirst": "Klicke oben auf 'Neuen Prompt erstellen', um deinen ersten Nachbearbeitungs-Prompt zu erstellen."
+      },
+      "warn": {
+        "noModel": "Post-processing is on, but no model is set for the selected provider. Pick or refresh a model below so it can run.",
+        "noPrompt": "Post-processing is on, but it won't run yet. Turn on App-aware cleanup, or select a prompt below."
+      },
+      "pro": {
+        "title": "App-aware cleanup (Pro)",
+        "description": "Detect the app you're dictating into and format the text to fit it — code in your editor, a proper email in Outlook, a quick line in Slack.",
+        "toggle": {
+          "label": "App-aware cleanup",
+          "description": "Pick the cleanup style from the app in focus when you dictate. Off by default; turning it off restores standard post-processing."
+        },
+        "test": {
+          "title": "Live test",
+          "detected": "Last dictation: {{app}} → {{profile}}",
+          "noneDetected": "No app detected yet. Dictate once with app-aware cleanup on, then refresh.",
+          "refresh": "Refresh detected app",
+          "run": "Clean it up",
+          "running": "Cleaning…",
+          "rawLabel": "Raw dictation",
+          "rawPlaceholder": "Paste or type messy dictation here…",
+          "cleanedLabel": "Cleaned",
+          "cleanedEmpty": "Run the test to see the cleaned result."
+        },
+        "profiles": {
+          "title": "Profiles",
+          "toggleAria": "Enable the {{name}} profile",
+          "promptPlaceholder": "Instruction for this profile…"
+        },
+        "rules": {
+          "title": "App routing",
+          "description": "Match the foreground app to a profile. The first enabled match wins; the default profile is used when nothing matches.",
+          "empty": "No rules yet. Add one to route an app to a profile.",
+          "matchProcess": "Process",
+          "matchTitle": "Title",
+          "patternPlaceholder": "e.g. code, slack, outlook",
+          "toggleAria": "Enable this rule",
+          "deleteAria": "Delete this rule",
+          "add": "Add rule"
+        },
+        "defaultProfile": {
+          "title": "Default profile",
+          "description": "Used when no rule matches the app you're dictating into."
+        },
+        "vocab": {
+          "title": "Vocabulary",
+          "empty": "No vocabulary yet. Add terms the speech model tends to get wrong.",
+          "fromPlaceholder": "Heard as…",
+          "toPlaceholder": "Should be…",
+          "deleteAria": "Delete this term",
+          "add": "Add term"
+        },
+        "latency": {
+          "title": "Speed limit",
+          "description": "How long to wait for the model before pasting the raw transcript instead, so dictation never stalls.",
+          "fast": "2s (fastest)",
+          "balanced": "4s (recommended)",
+          "quality": "8s (best quality)",
+          "none": "No limit"
+        }
       }
     },
     "history": {
@@ -445,7 +506,7 @@
       },
       "updateChecks": {
         "label": "Nach Updates suchen",
-        "description": "Automatisch nach neuen Versionen von Handy suchen"
+        "description": "Automatisch nach neuen Versionen von Quill suchen"
       },
       "soundTheme": {
         "label": "Sound-Thema",
@@ -498,7 +559,9 @@
       "paths": {
         "appData": "App-Daten:",
         "models": "Modelle:",
-        "settings": "Einstellungen:"
+        "settings": "Einstellungen:",
+        "title": "Debug Paths",
+        "description": "Display internal file paths and directories for debugging purposes"
       },
       "pasteDelay": {
         "title": "Einfügeverzögerung",
@@ -513,11 +576,11 @@
       "title": "Info",
       "version": {
         "title": "Version",
-        "description": "Aktuelle Version von Handy"
+        "description": "Aktuelle Version von Quill"
       },
       "appDataDirectory": {
         "title": "App-Datenverzeichnis",
-        "description": "Speicherort der Handy-Daten"
+        "description": "Speicherort der Quill-Daten"
       },
       "sourceCode": {
         "title": "Quellcode",
@@ -526,7 +589,7 @@
       },
       "supportDevelopment": {
         "title": "Entwicklung unterstützen",
-        "description": "Hilf uns, Handy weiterzuentwickeln",
+        "description": "Hilf uns, Quill weiterzuentwickeln",
         "button": "Spenden"
       },
       "acknowledgments": {
@@ -534,9 +597,10 @@
         "whisper": {
           "title": "Whisper.cpp",
           "description": "Hochleistungs-Inferenz des Whisper-Spracherkennungsmodells von OpenAI",
-          "details": "Handy verwendet Whisper.cpp für schnelle, lokale Sprach-zu-Text-Verarbeitung. Dank an Georgi Gerganov und die Mitwirkenden für ihre großartige Arbeit."
+          "details": "Quill verwendet Whisper.cpp für schnelle, lokale Sprach-zu-Text-Verarbeitung. Dank an Georgi Gerganov und die Mitwirkenden für ihre großartige Arbeit."
         }
-      }
+      },
+      "tagline": "Private, on-device speech to text."
     }
   },
   "footer": {
@@ -576,11 +640,14 @@
     "off": "Aus",
     "yes": "Ja",
     "no": "Nein",
-    "noOptionsFound": "Keine Optionen gefunden"
+    "noOptionsFound": "Keine Optionen gefunden",
+    "copy": "Copy",
+    "copyToClipboard": "Copy to clipboard",
+    "notAvailable": "Not available"
   },
   "accessibility": {
     "permissionsRequired": "Bedienungshilfen-Berechtigungen erforderlich",
-    "permissionsDescription": "Handy benötigt Bedienungshilfen-Berechtigungen, um transkribierten Text einzugeben.",
+    "permissionsDescription": "Quill benötigt Bedienungshilfen-Berechtigungen, um transkribierten Text einzugeben.",
     "openSettings": "Systemeinstellungen öffnen",
     "dismiss": "Schließen"
   },
@@ -603,7 +670,7 @@
   },
   "appLanguage": {
     "title": "Anwendungssprache",
-    "description": "Sprache der Handy-Oberfläche ändern"
+    "description": "Sprache der Quill-Oberfläche ändern"
   },
   "overlay": {
     "transcribing": "Transkribiere...",

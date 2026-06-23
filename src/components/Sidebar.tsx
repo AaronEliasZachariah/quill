@@ -1,8 +1,15 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Cog, FlaskConical, History, Info, Sparkles, Cpu } from "lucide-react";
-import HandyTextLogo from "./icons/HandyTextLogo";
-import HandyHand from "./icons/HandyHand";
+import {
+  Cog,
+  FlaskConical,
+  History,
+  Info,
+  Sparkles,
+  Cpu,
+  Feather,
+} from "lucide-react";
+import QuillWordmark from "./icons/QuillWordmark";
 import { useSettings } from "../hooks/useSettings";
 import {
   GeneralSettings,
@@ -34,7 +41,7 @@ interface SectionConfig {
 export const SECTIONS_CONFIG = {
   general: {
     labelKey: "sidebar.general",
-    icon: HandyHand,
+    icon: Feather,
     component: GeneralSettings,
     enabled: () => true,
   },
@@ -93,34 +100,45 @@ export const Sidebar: React.FC<SidebarProps> = ({
     .map(([id, config]) => ({ id: id as SidebarSection, ...config }));
 
   return (
-    <div className="flex flex-col w-40 h-full border-e border-mid-gray/20 items-center px-2">
-      <HandyTextLogo width={120} className="m-4" />
-      <div className="flex flex-col w-full items-center gap-1 pt-2 border-t border-mid-gray/20">
+    <div className="flex flex-col w-44 h-full border-e border-mid-gray/15 items-center px-3">
+      <div className="py-5">
+        <QuillWordmark width={112} animateStroke />
+      </div>
+      <nav className="flex flex-col w-full items-stretch gap-0.5 pt-3 border-t border-mid-gray/15">
         {availableSections.map((section) => {
           const Icon = section.icon;
           const isActive = activeSection === section.id;
 
           return (
-            <div
+            <button
               key={section.id}
-              className={`flex gap-2 items-center p-2 w-full rounded-lg cursor-pointer transition-colors ${
+              type="button"
+              aria-current={isActive ? "page" : undefined}
+              className={`relative flex gap-2.5 items-center ps-3 pe-2.5 py-2 w-full rounded-lg cursor-pointer transition-colors duration-150 text-start ${
                 isActive
-                  ? "bg-logo-primary/80"
-                  : "hover:bg-mid-gray/20 hover:opacity-100 opacity-85"
+                  ? "bg-logo-primary/10 text-logo-primary"
+                  : "text-mid-gray hover:text-text hover:bg-mid-gray/8"
               }`}
               onClick={() => onSectionChange(section.id)}
             >
-              <Icon width={24} height={24} className="shrink-0" />
-              <p
-                className="text-sm font-medium truncate"
+              {/* The marked margin rule for the active page. */}
+              <span
+                className={`absolute start-0 inset-y-1.5 w-[3px] rounded-full bg-logo-primary transition-opacity duration-150 ${
+                  isActive ? "opacity-100" : "opacity-0"
+                }`}
+                aria-hidden="true"
+              />
+              <Icon width={18} height={18} className="shrink-0" />
+              <span
+                className={`text-sm truncate ${isActive ? "font-medium" : ""}`}
                 title={t(section.labelKey)}
               >
                 {t(section.labelKey)}
-              </p>
-            </div>
+              </span>
+            </button>
           );
         })}
-      </div>
+      </nav>
     </div>
   );
 };

@@ -100,7 +100,7 @@
     },
     "permissions": {
       "title": "Cần cấp quyền",
-      "description": "Handy cần một số quyền để hoạt động bình thường.",
+      "description": "Quill cần một số quyền để hoạt động bình thường.",
       "microphone": {
         "title": "Quyền truy cập Micrô",
         "description": "Cần thiết để nghe giọng nói của bạn để chuyển đổi."
@@ -117,7 +117,8 @@
         "checkFailed": "Không thể kiểm tra quyền. Vui lòng thử lại.",
         "requestFailed": "Không thể yêu cầu quyền. Vui lòng thử lại."
       }
-    }
+    },
+    "proBadge": "pro"
   },
   "modelSelector": {
     "custom": "Tùy chỉnh",
@@ -176,7 +177,7 @@
     "general": {
       "title": "Chung",
       "shortcut": {
-        "title": "Phím tắt Handy",
+        "title": "Phím tắt Quill",
         "description": "Cấu hình phím tắt để kích hoạt ghi âm chuyển đổi giọng nói thành văn bản",
         "loading": "Đang tải phím tắt...",
         "none": "Chưa cấu hình phím tắt",
@@ -276,11 +277,11 @@
       },
       "autostart": {
         "label": "Khởi động cùng hệ thống",
-        "description": "Tự động khởi động Handy khi bạn đăng nhập vào máy tính."
+        "description": "Tự động khởi động Quill khi bạn đăng nhập vào máy tính."
       },
       "showTrayIcon": {
         "label": "Hiển thị biểu tượng khay",
-        "description": "Hiển thị biểu tượng Handy trong khay hệ thống."
+        "description": "Hiển thị biểu tượng Quill trong khay hệ thống."
       },
       "overlay": {
         "title": "Vị trí lớp phủ",
@@ -416,6 +417,66 @@
         "cancel": "Hủy",
         "selectToEdit": "Chọn một prompt ở trên để xem và chỉnh sửa chi tiết.",
         "createFirst": "Nhấn 'Tạo Prompt mới' ở trên để tạo prompt xử lý sau đầu tiên của bạn."
+      },
+      "warn": {
+        "noModel": "Post-processing is on, but no model is set for the selected provider. Pick or refresh a model below so it can run.",
+        "noPrompt": "Post-processing is on, but it won't run yet. Turn on App-aware cleanup, or select a prompt below."
+      },
+      "pro": {
+        "title": "App-aware cleanup (Pro)",
+        "description": "Detect the app you're dictating into and format the text to fit it — code in your editor, a proper email in Outlook, a quick line in Slack.",
+        "toggle": {
+          "label": "App-aware cleanup",
+          "description": "Pick the cleanup style from the app in focus when you dictate. Off by default; turning it off restores standard post-processing."
+        },
+        "test": {
+          "title": "Live test",
+          "detected": "Last dictation: {{app}} → {{profile}}",
+          "noneDetected": "No app detected yet. Dictate once with app-aware cleanup on, then refresh.",
+          "refresh": "Refresh detected app",
+          "run": "Clean it up",
+          "running": "Cleaning…",
+          "rawLabel": "Raw dictation",
+          "rawPlaceholder": "Paste or type messy dictation here…",
+          "cleanedLabel": "Cleaned",
+          "cleanedEmpty": "Run the test to see the cleaned result."
+        },
+        "profiles": {
+          "title": "Profiles",
+          "toggleAria": "Enable the {{name}} profile",
+          "promptPlaceholder": "Instruction for this profile…"
+        },
+        "rules": {
+          "title": "App routing",
+          "description": "Match the foreground app to a profile. The first enabled match wins; the default profile is used when nothing matches.",
+          "empty": "No rules yet. Add one to route an app to a profile.",
+          "matchProcess": "Process",
+          "matchTitle": "Title",
+          "patternPlaceholder": "e.g. code, slack, outlook",
+          "toggleAria": "Enable this rule",
+          "deleteAria": "Delete this rule",
+          "add": "Add rule"
+        },
+        "defaultProfile": {
+          "title": "Default profile",
+          "description": "Used when no rule matches the app you're dictating into."
+        },
+        "vocab": {
+          "title": "Vocabulary",
+          "empty": "No vocabulary yet. Add terms the speech model tends to get wrong.",
+          "fromPlaceholder": "Heard as…",
+          "toPlaceholder": "Should be…",
+          "deleteAria": "Delete this term",
+          "add": "Add term"
+        },
+        "latency": {
+          "title": "Speed limit",
+          "description": "How long to wait for the model before pasting the raw transcript instead, so dictation never stalls.",
+          "fast": "2s (fastest)",
+          "balanced": "4s (recommended)",
+          "quality": "8s (best quality)",
+          "none": "No limit"
+        }
       }
     },
     "history": {
@@ -445,7 +506,7 @@
       },
       "updateChecks": {
         "label": "Kiểm tra cập nhật",
-        "description": "Tự động kiểm tra phiên bản mới của Handy"
+        "description": "Tự động kiểm tra phiên bản mới của Quill"
       },
       "soundTheme": {
         "label": "Chủ đề âm thanh",
@@ -498,7 +559,9 @@
       "paths": {
         "appData": "Dữ liệu ứng dụng:",
         "models": "Mô hình:",
-        "settings": "Cài đặt:"
+        "settings": "Cài đặt:",
+        "title": "Debug Paths",
+        "description": "Display internal file paths and directories for debugging purposes"
       },
       "pasteDelay": {
         "title": "Độ trễ dán",
@@ -513,11 +576,11 @@
       "title": "Giới thiệu",
       "version": {
         "title": "Phiên bản",
-        "description": "Phiên bản hiện tại của Handy"
+        "description": "Phiên bản hiện tại của Quill"
       },
       "appDataDirectory": {
         "title": "Thư mục dữ liệu ứng dụng",
-        "description": "Vị trí Handy lưu trữ dữ liệu"
+        "description": "Vị trí Quill lưu trữ dữ liệu"
       },
       "sourceCode": {
         "title": "Mã nguồn",
@@ -526,7 +589,7 @@
       },
       "supportDevelopment": {
         "title": "Hỗ trợ phát triển",
-        "description": "Giúp chúng tôi tiếp tục xây dựng Handy",
+        "description": "Giúp chúng tôi tiếp tục xây dựng Quill",
         "button": "Quyên góp"
       },
       "acknowledgments": {
@@ -534,9 +597,10 @@
         "whisper": {
           "title": "Whisper.cpp",
           "description": "Suy luận hiệu suất cao của mô hình nhận dạng giọng nói tự động Whisper của OpenAI",
-          "details": "Handy sử dụng Whisper.cpp để xử lý chuyển đổi giọng nói thành văn bản nhanh, cục bộ. Cảm ơn công việc tuyệt vời của Georgi Gerganov và các cộng tác viên."
+          "details": "Quill sử dụng Whisper.cpp để xử lý chuyển đổi giọng nói thành văn bản nhanh, cục bộ. Cảm ơn công việc tuyệt vời của Georgi Gerganov và các cộng tác viên."
         }
-      }
+      },
+      "tagline": "Private, on-device speech to text."
     }
   },
   "footer": {
@@ -576,11 +640,14 @@
     "off": "Tắt",
     "yes": "Có",
     "no": "Không",
-    "noOptionsFound": "Không tìm thấy tùy chọn"
+    "noOptionsFound": "Không tìm thấy tùy chọn",
+    "copy": "Copy",
+    "copyToClipboard": "Copy to clipboard",
+    "notAvailable": "Not available"
   },
   "accessibility": {
     "permissionsRequired": "Cần quyền truy cập",
-    "permissionsDescription": "Handy cần quyền truy cập để gõ văn bản đã chuyển đổi.",
+    "permissionsDescription": "Quill cần quyền truy cập để gõ văn bản đã chuyển đổi.",
     "openSettings": "Mở Cài đặt Hệ thống",
     "dismiss": "Bỏ qua"
   },
@@ -603,7 +670,7 @@
   },
   "appLanguage": {
     "title": "Ngôn ngữ ứng dụng",
-    "description": "Thay đổi ngôn ngữ giao diện của Handy"
+    "description": "Thay đổi ngôn ngữ giao diện của Quill"
   },
   "overlay": {
     "transcribing": "Đang chuyển đổi...",

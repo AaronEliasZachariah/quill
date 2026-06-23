@@ -18,7 +18,7 @@
     "about": "About"
   },
   "onboarding": {
-    "proBadge": "Pro",
+    "proBadge": "pro",
     "subtitle": "To get started, choose a transcription model",
     "recommended": "Recommended",
     "download": "Download",
@@ -101,7 +101,7 @@
     },
     "permissions": {
       "title": "Permissions Required",
-      "description": "Handy Pro needs a couple of permissions to work properly.",
+      "description": "Quill needs a couple of permissions to work properly.",
       "microphone": {
         "title": "Microphone Access",
         "description": "Required to hear your voice for transcription."
@@ -159,7 +159,7 @@
     "general": {
       "title": "General",
       "shortcut": {
-        "title": "Handy Pro Shortcuts",
+        "title": "Quill Shortcuts",
         "description": "Configure keyboard shortcuts to trigger speech-to-text recording",
         "loading": "Loading shortcuts...",
         "none": "No shortcuts configured",
@@ -277,11 +277,11 @@
       },
       "autostart": {
         "label": "Launch on Startup",
-        "description": "Automatically start Handy Pro when you log in to your computer."
+        "description": "Automatically start Quill when you log in to your computer."
       },
       "showTrayIcon": {
         "label": "Show Tray Icon",
-        "description": "Display the Handy Pro icon in the system tray."
+        "description": "Display the Quill icon in the system tray."
       },
       "overlay": {
         "title": "Overlay Position",
@@ -506,7 +506,7 @@
       },
       "updateChecks": {
         "label": "Check for Updates",
-        "description": "Automatically check for new versions of Handy Pro"
+        "description": "Automatically check for new versions of Quill"
       },
       "soundTheme": {
         "label": "Sound Theme",
@@ -557,6 +557,8 @@
         "bindingsReset": "Keyboard shortcuts were incompatible and reset to defaults"
       },
       "paths": {
+        "title": "Debug Paths",
+        "description": "Display internal file paths and directories for debugging purposes",
         "appData": "App Data:",
         "models": "Models:",
         "settings": "Settings:"
@@ -572,13 +574,14 @@
     },
     "about": {
       "title": "About",
+      "tagline": "Private, on-device speech to text.",
       "version": {
         "title": "Version",
-        "description": "Current version of Handy Pro"
+        "description": "Current version of Quill"
       },
       "appDataDirectory": {
         "title": "App Data Directory",
-        "description": "Location where Handy Pro stores its data"
+        "description": "Location where Quill stores its data"
       },
       "sourceCode": {
         "title": "Source Code",
@@ -587,7 +590,7 @@
       },
       "supportDevelopment": {
         "title": "Support Development",
-        "description": "Help us continue building Handy Pro",
+        "description": "Help us continue building Quill",
         "button": "Donate"
       },
       "acknowledgments": {
@@ -595,7 +598,7 @@
         "whisper": {
           "title": "Whisper.cpp",
           "description": "High-performance inference of OpenAI's Whisper automatic speech recognition model",
-          "details": "Handy Pro uses Whisper.cpp for fast, local speech-to-text processing. Thanks to the amazing work by Georgi Gerganov and contributors."
+          "details": "Quill uses Whisper.cpp for fast, local speech-to-text processing. Thanks to the amazing work by Georgi Gerganov and contributors."
         }
       }
     }
@@ -637,11 +640,14 @@
     "off": "Off",
     "yes": "Yes",
     "no": "No",
+    "copy": "Copy",
+    "copyToClipboard": "Copy to clipboard",
+    "notAvailable": "Not available",
     "noOptionsFound": "No options found"
   },
   "accessibility": {
     "permissionsRequired": "Accessibility Permissions Required",
-    "permissionsDescription": "Handy Pro needs accessibility permissions to type transcribed text.",
+    "permissionsDescription": "Quill needs accessibility permissions to type transcribed text.",
     "openSettings": "Open System Settings",
     "dismiss": "Dismiss"
   },
@@ -664,7 +670,7 @@
   },
   "appLanguage": {
     "title": "Application Language",
-    "description": "Change the language of the Handy Pro interface"
+    "description": "Change the language of the Quill interface"
   },
   "overlay": {
     "transcribing": "Transcribing...",

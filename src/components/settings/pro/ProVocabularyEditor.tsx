@@ -20,7 +20,9 @@ export const ProVocabularyEditor: React.FC = () => {
     updateSetting("pro_vocabulary", next);
   const patchEntry = (index: number, patch: Partial<ProVocabEntry>) =>
     persist(
-      vocabulary.map((entry, i) => (i === index ? { ...entry, ...patch } : entry)),
+      vocabulary.map((entry, i) =>
+        i === index ? { ...entry, ...patch } : entry,
+      ),
     );
   const removeEntry = (index: number) =>
     persist(vocabulary.filter((_, i) => i !== index));
@@ -41,7 +43,9 @@ export const ProVocabularyEditor: React.FC = () => {
                 value={entry.from}
                 disabled={updating}
                 onChange={(e) => patchEntry(index, { from: e.target.value })}
-                placeholder={t("settings.postProcessing.pro.vocab.fromPlaceholder")}
+                placeholder={t(
+                  "settings.postProcessing.pro.vocab.fromPlaceholder",
+                )}
                 className="flex-1 min-w-[120px]"
               />
               <span className="text-mid-gray shrink-0" aria-hidden>
@@ -52,7 +56,9 @@ export const ProVocabularyEditor: React.FC = () => {
                 value={entry.to}
                 disabled={updating}
                 onChange={(e) => patchEntry(index, { to: e.target.value })}
-                placeholder={t("settings.postProcessing.pro.vocab.toPlaceholder")}
+                placeholder={t(
+                  "settings.postProcessing.pro.vocab.toPlaceholder",
+                )}
                 className="flex-1 min-w-[120px]"
               />
               <Button
@@ -69,7 +75,12 @@ export const ProVocabularyEditor: React.FC = () => {
           ))}
         </div>
       )}
-      <Button variant="secondary" size="sm" disabled={updating} onClick={addEntry}>
+      <Button
+        variant="secondary"
+        size="sm"
+        disabled={updating}
+        onClick={addEntry}
+      >
         {t("settings.postProcessing.pro.vocab.add")}
       </Button>
     </div>

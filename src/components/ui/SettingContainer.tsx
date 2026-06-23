@@ -49,7 +49,7 @@ export const SettingContainer: React.FC<SettingContainerProps> = ({
 
   const containerClasses = grouped
     ? "px-4 p-2"
-    : "px-4 p-2 rounded-lg border border-mid-gray/20";
+    : "px-4 p-2 rounded-card border border-mid-gray/12 bg-surface shadow-sheet";
 
   if (layout === "stacked") {
     if (descriptionMode === "tooltip") {
@@ -122,7 +122,7 @@ export const SettingContainer: React.FC<SettingContainerProps> = ({
   // Horizontal layout (default)
   const horizontalContainerClasses = grouped
     ? "flex items-center justify-between px-4 p-2"
-    : "flex items-center justify-between px-4 p-2 rounded-lg border border-mid-gray/20";
+    : "flex items-center justify-between px-4 p-2 rounded-card border border-mid-gray/12 bg-surface shadow-sheet";
 
   if (descriptionMode === "tooltip") {
     return (

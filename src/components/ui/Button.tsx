@@ -19,21 +19,21 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    "font-medium rounded-lg border focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer";
+    "font-medium rounded-lg border transition-[background-color,border-color,transform,box-shadow] duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-logo-primary/45 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:translate-y-0 active:translate-y-[0.5px] cursor-pointer";
 
   const variantClasses = {
     primary:
-      "text-white bg-background-ui border-background-ui hover:bg-background-ui/80 hover:border-background-ui/80 focus:ring-1 focus:ring-background-ui",
+      "text-white bg-background-ui border-background-ui shadow-sm hover:bg-background-ui/90 hover:border-background-ui/90",
     "primary-soft":
-      "text-text bg-logo-primary/20 border-transparent hover:bg-logo-primary/30 focus:ring-1 focus:ring-logo-primary",
+      "text-logo-primary bg-logo-primary/12 border-transparent hover:bg-logo-primary/20",
     secondary:
-      "bg-mid-gray/10 border-mid-gray/20 hover:bg-background-ui/30 hover:border-logo-primary focus:outline-none",
+      "bg-surface border-mid-gray/25 hover:border-logo-primary hover:bg-logo-primary/6",
     danger:
-      "text-white bg-red-600 border-mid-gray/20 hover:bg-red-700 hover:border-red-700 focus:ring-1 focus:ring-red-500",
+      "text-white bg-red-600 border-red-600 shadow-sm hover:bg-red-700 hover:border-red-700",
     "danger-ghost":
-      "text-red-400 border-transparent hover:text-red-300 hover:bg-red-500/10 focus:bg-red-500/20",
+      "text-red-600 dark:text-red-400 border-transparent hover:text-red-700 dark:hover:text-red-300 hover:bg-red-500/10",
     ghost:
-      "text-current border-transparent hover:bg-mid-gray/10 hover:border-logo-primary focus:bg-mid-gray/20",
+      "text-current border-transparent hover:bg-mid-gray/10 hover:border-mid-gray/20",
   };
 
   const sizeClasses = {

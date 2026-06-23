@@ -9,7 +9,7 @@ app I'm dictating into" behavior. It is **additive** and **off by default** — 
 feature disabled, handy-pro behaves identically to upstream Handy.
 
 Upstream attribution and the MIT `LICENSE` are preserved unchanged. `upstream` remotes
-point at `cjpais/Handy`; `origin` is `AaronEliasZachariah/handy-pro`.
+point at `cjpais/Handy`; `origin` is `AaronEliasZachariah/quill`.
 
 ---
 
@@ -18,23 +18,23 @@ point at `cjpais/Handy`; `origin` is `AaronEliasZachariah/handy-pro`.
 **Handy upstream already ships a post-processing feature.** The brief was written as if
 Handy had none, but the real codebase already contains:
 
-| Concern | Upstream already has it |
-| --- | --- |
-| LLM client (provider abstraction) | `src-tauri/src/llm_client.rs` — OpenAI-compatible `/chat/completions`, system prompt + structured-output (`json_schema`) support, special-cases `anthropic` auth headers |
-| Provider list | `settings.rs::default_post_process_providers()` — OpenAI, Z.AI, OpenRouter, Anthropic, Groq, Cerebras, AWS Bedrock, **and a `custom` provider pre-pointed at `http://localhost:11434/v1` (Ollama)** |
-| Per-provider API key / model | `post_process_api_keys` (redacted `SecretMap`), `post_process_models` |
-| Editable prompts | `post_process_prompts: Vec<LLMPrompt{id,name,prompt}>` with a `${output}` placeholder, plus `post_process_selected_prompt_id` |
-| Master toggle | `post_process_enabled` (gates the `transcribe_with_post_process` shortcut registration) |
-| Custom vocabulary (STT side) | `custom_words: Vec<String>` (Whisper word-boost / correction), `custom_filler_words` |
-| Settings UI | `components/settings/post-processing/`, `PostProcessingSettingsApi/`, `PostProcessingToggle`, `PostProcessingSettingsPrompts` |
-| Processing indicator | overlay already supports a `"processing"` state (`overlay.rs::show_processing_overlay`) |
-| Per-invocation trigger | two shortcuts: `transcribe` (raw) and `transcribe_with_post_process` (cleaned) |
+| Concern                           | Upstream already has it                                                                                                                                                                             |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| LLM client (provider abstraction) | `src-tauri/src/llm_client.rs` — OpenAI-compatible `/chat/completions`, system prompt + structured-output (`json_schema`) support, special-cases `anthropic` auth headers                            |
+| Provider list                     | `settings.rs::default_post_process_providers()` — OpenAI, Z.AI, OpenRouter, Anthropic, Groq, Cerebras, AWS Bedrock, **and a `custom` provider pre-pointed at `http://localhost:11434/v1` (Ollama)** |
+| Per-provider API key / model      | `post_process_api_keys` (redacted `SecretMap`), `post_process_models`                                                                                                                               |
+| Editable prompts                  | `post_process_prompts: Vec<LLMPrompt{id,name,prompt}>` with a `${output}` placeholder, plus `post_process_selected_prompt_id`                                                                       |
+| Master toggle                     | `post_process_enabled` (gates the `transcribe_with_post_process` shortcut registration)                                                                                                             |
+| Custom vocabulary (STT side)      | `custom_words: Vec<String>` (Whisper word-boost / correction), `custom_filler_words`                                                                                                                |
+| Settings UI                       | `components/settings/post-processing/`, `PostProcessingSettingsApi/`, `PostProcessingToggle`, `PostProcessingSettingsPrompts`                                                                       |
+| Processing indicator              | overlay already supports a `"processing"` state (`overlay.rs::show_processing_overlay`)                                                                                                             |
+| Per-invocation trigger            | two shortcuts: `transcribe` (raw) and `transcribe_with_post_process` (cleaned)                                                                                                                      |
 
-**Consequence / deviation from the brief:** rather than *build* an LLM client, provider
+**Consequence / deviation from the brief:** rather than _build_ an LLM client, provider
 abstraction, prompt store, toggle, and overlay indicator that already exist (which would
 duplicate and fight upstream), handy-pro **reuses all of it** and adds the one thing
 upstream genuinely lacks: **app-aware routing** — detecting the foreground app at
-dictation time and choosing a *per-app profile prompt* (plus a user vocabulary and a
+dictation time and choosing a _per-app profile prompt_ (plus a user vocabulary and a
 hard latency timeout). That routing is the actual "Wispr-Flow-formatting" differentiator.
 
 This is the biggest deviation and it makes the result smaller, cleaner, and more correct
@@ -46,7 +46,7 @@ than the literal brief.
 
 ```
 hotkey ─▶ TranscriptionCoordinator (1 serialized thread) ─▶ TranscribeAction::start  → record (cpal + Silero VAD)
-                                                          └▶ TranscribeAction::stop   → transcribe (transcribe-rs / whisper) 
+                                                          └▶ TranscribeAction::stop   → transcribe (transcribe-rs / whisper)
                                                                                        → process_transcription_output()
                                                                                           ├─ maybe_convert_chinese_variant()
                                                                                           ├─ post_process_transcription()  ◀── LLM
@@ -54,10 +54,11 @@ hotkey ─▶ TranscriptionCoordinator (1 serialized thread) ─▶ TranscribeAc
 ```
 
 Key files:
+
 - `src-tauri/src/actions.rs` — **`post_process_transcription(settings, transcription)`** picks
   provider → model → the single global `post_process_selected_prompt_id` → calls
   `llm_client`. **`process_transcription_output(app, transcription, post_process)`** wraps it,
-  called from `TranscribeAction::stop` *after* transcription and *before* paste. **This is the
+  called from `TranscribeAction::stop` _after_ transcription and _before_ paste. **This is the
   integration seam.**
 - `src-tauri/src/llm_client.rs` — `send_chat_completion[_with_schema](...)` (reused as-is).
 - `src-tauri/src/settings.rs` — `AppSettings` persisted via `tauri-plugin-store`
@@ -81,6 +82,7 @@ Key files:
 ## 3. Integration plan (additive, fail-safe)
 
 ### Backend
+
 1. **New settings fields** on `AppSettings` (all `#[serde(default)]`):
    - `pro_app_aware_enabled: bool` (default **false**) — master switch for the Pro layer.
    - `pro_profiles: Vec<ProProfile{ key,label,enabled,prompt }>` — built-in seed: `code`,
@@ -95,7 +97,7 @@ Key files:
    - `pro_timeout_ms: u64` (default **4000**) — hard cap on the LLM call.
 2. **`app_context.rs`** (Windows): `foreground_app() -> Option<AppContext{process_name,window_title}>`
    via `GetForegroundWindow → GetWindowThreadProcessId → OpenProcess(QUERY_LIMITED_INFORMATION)
-   → QueryFullProcessImageNameW` (file stem) + `GetWindowTextW`. Non-Windows returns `None`.
+→ QueryFullProcessImageNameW` (file stem) + `GetWindowTextW`. Non-Windows returns `None`.
    Requires adding the `Win32_System_Threading` feature to the already-present `windows` crate.
 3. **`pro` routing module**: `resolve_profile(settings, ctx) -> profile_key`;
    `build_profile_system_prompt(base, profile, vocab)`; `apply_vocabulary(text, vocab)`.
@@ -113,6 +115,7 @@ Key files:
    provider.) Existing users keep their saved provider; only fresh installs default to Ollama.
 
 ### Frontend (within the existing Post-processing tab — no new sidebar entry)
+
 New `components/settings/pro/` components, wired as new `SettingsGroup`s in
 `PostProcessingSettings.tsx`: master toggle, per-profile enable+prompt editor, app→profile
 rules editor, vocabulary editor, latency/quality control, and a **live test** panel (paste raw
@@ -121,6 +124,7 @@ existing `ui/*` primitives via the **frontend-design** skill so it doesn't read 
 i18n keys added to `locales/en/translation.json` (other locales fall back to en).
 
 ### Fail-safe contract (never stall dictation)
+
 `post_process` already returns `Option<String>` and the caller falls back to the raw transcript
 on `None`/error. handy-pro preserves and strengthens this: app-detection failure → fall back to
 the global prompt; LLM error/timeout/empty → return `None` → **raw transcript is pasted
@@ -134,7 +138,7 @@ unchanged.** With `pro_app_aware_enabled = false` the code path is upstream-iden
   "LLM client / provider abstraction / prompts / toggle / overlay indicator" already exist;
   duplicating them would be wrong. handy-pro contributes app-aware routing on top.
 - **D2 — Separate `pro_app_aware_enabled` from upstream `post_process_enabled`.** The Pro layer
-  is opt-in *within* post-processing, so toggling it never changes upstream behavior and the
+  is opt-in _within_ post-processing, so toggling it never changes upstream behavior and the
   raw vs. cleaned shortcuts keep working.
 - **D3 — Ollama default model:** `llama3.2:3b` (pulled locally, ~2 GB, fast instruct). Chosen
   for low latency under the 4 s timeout while still following instructions well; configurable.
@@ -206,11 +210,11 @@ Deeper cosmetic rebranding (tray text, logo SVGs, remaining "Handy" UI strings) 
   instruction more reliably — documented in the README.
 - **Runtime (GUI):** ran `tauri dev` and drove the app — enabled Post-processing, opened the
   **Post Process** tab, turned on **App-aware cleanup**, switched the provider to **Ollama (local)**
-  (model auto-filled `llama3.2:3b`), and ran the **live test** with the *Code / Terminal* profile.
+  (model auto-filled `llama3.2:3b`), and ran the **live test** with the _Code / Terminal_ profile.
   The CLEANED panel returned `Refactor the \`getUser\` function in \`auth.ts\` and add a null check
   for the email before calling \`trim()\`` — confirming the full GUI → command → Ollama → cleaned
   output path. (Running the dev build needs the separately-installed release Handy closed first;
   both share one bundle identifier.)
 
 _Status of this document: living record, updated as milestones land. M0–M5 complete and pushed to
-`AaronEliasZachariah/handy-pro`._
+`AaronEliasZachariah/quill`._

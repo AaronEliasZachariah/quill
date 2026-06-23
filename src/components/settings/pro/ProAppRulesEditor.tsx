@@ -7,7 +7,7 @@ import { Button } from "../../ui/Button";
 import { useSettings } from "../../../hooks/useSettings";
 
 const fieldClasses =
-  "px-2 py-1 text-sm font-semibold bg-mid-gray/10 border border-mid-gray/80 rounded-md text-start transition-all duration-150 hover:bg-logo-primary/10 hover:border-logo-primary focus:outline-none focus:border-logo-primary disabled:opacity-60 disabled:cursor-not-allowed";
+  "px-2 py-1 text-sm font-medium bg-mid-gray/10 border border-mid-gray/25 rounded-lg text-start transition-all duration-150 hover:border-mid-gray/40 focus:outline-none focus:border-logo-primary focus:ring-2 focus:ring-logo-primary/20 disabled:opacity-60 disabled:cursor-not-allowed";
 
 /**
  * The ordered app -> profile rules table. First enabled rule whose process/title substring
@@ -22,7 +22,9 @@ export const ProAppRulesEditor: React.FC = () => {
 
   const persist = (next: ProAppRule[]) => updateSetting("pro_app_rules", next);
   const patchRule = (id: string, patch: Partial<ProAppRule>) =>
-    persist(rules.map((rule) => (rule.id === id ? { ...rule, ...patch } : rule)));
+    persist(
+      rules.map((rule) => (rule.id === id ? { ...rule, ...patch } : rule)),
+    );
   const removeRule = (id: string) =>
     persist(rules.filter((rule) => rule.id !== id));
   const addRule = () =>
@@ -52,7 +54,9 @@ export const ProAppRulesEditor: React.FC = () => {
                 className="w-4 h-4 accent-logo-primary cursor-pointer shrink-0"
                 checked={rule.enabled ?? true}
                 disabled={updating}
-                onChange={(e) => patchRule(rule.id, { enabled: e.target.checked })}
+                onChange={(e) =>
+                  patchRule(rule.id, { enabled: e.target.checked })
+                }
                 aria-label={t("settings.postProcessing.pro.rules.toggleAria")}
               />
               <select
@@ -60,7 +64,9 @@ export const ProAppRulesEditor: React.FC = () => {
                 value={rule.match_type ?? "process"}
                 disabled={updating}
                 onChange={(e) =>
-                  patchRule(rule.id, { match_type: e.target.value as ProMatchType })
+                  patchRule(rule.id, {
+                    match_type: e.target.value as ProMatchType,
+                  })
                 }
               >
                 <option value="process">
@@ -74,8 +80,12 @@ export const ProAppRulesEditor: React.FC = () => {
                 variant="compact"
                 value={rule.pattern}
                 disabled={updating}
-                onChange={(e) => patchRule(rule.id, { pattern: e.target.value })}
-                placeholder={t("settings.postProcessing.pro.rules.patternPlaceholder")}
+                onChange={(e) =>
+                  patchRule(rule.id, { pattern: e.target.value })
+                }
+                placeholder={t(
+                  "settings.postProcessing.pro.rules.patternPlaceholder",
+                )}
                 className="flex-1 min-w-[120px]"
               />
               <span className="text-mid-gray shrink-0" aria-hidden>
@@ -85,7 +95,9 @@ export const ProAppRulesEditor: React.FC = () => {
                 className={`${fieldClasses} w-36 cursor-pointer`}
                 value={rule.profile_key}
                 disabled={updating}
-                onChange={(e) => patchRule(rule.id, { profile_key: e.target.value })}
+                onChange={(e) =>
+                  patchRule(rule.id, { profile_key: e.target.value })
+                }
               >
                 {profiles.map((profile) => (
                   <option key={profile.key} value={profile.key}>
@@ -107,7 +119,12 @@ export const ProAppRulesEditor: React.FC = () => {
           ))}
         </div>
       )}
-      <Button variant="secondary" size="sm" disabled={updating} onClick={addRule}>
+      <Button
+        variant="secondary"
+        size="sm"
+        disabled={updating}
+        onClick={addRule}
+      >
         {t("settings.postProcessing.pro.rules.add")}
       </Button>
     </div>

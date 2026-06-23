@@ -246,8 +246,8 @@ export const ModelsSettings: React.FC = () => {
                 </button>
 
                 {languageDropdownOpen && (
-                  <div className="absolute top-full right-0 mt-1 w-56 bg-background border border-mid-gray/80 rounded-lg shadow-lg z-50 overflow-hidden">
-                    <div className="p-2 border-b border-mid-gray/40">
+                  <div className="absolute top-full right-0 mt-1 w-56 bg-surface border border-mid-gray/12 rounded-card shadow-sheet z-50 overflow-hidden">
+                    <div className="p-2 border-b border-mid-gray/12">
                       <input
                         ref={languageSearchInputRef}
                         type="text"
@@ -269,7 +269,7 @@ export const ModelsSettings: React.FC = () => {
                         placeholder={t(
                           "settings.general.language.searchPlaceholder",
                         )}
-                        className="w-full px-2 py-1 text-sm bg-mid-gray/10 border border-mid-gray/40 rounded-md focus:outline-none focus:ring-1 focus:ring-logo-primary"
+                        className="w-full px-2 py-1 text-sm bg-surface border border-mid-gray/25 rounded-lg focus:outline-none focus:ring-2 focus:ring-logo-primary/20"
                       />
                     </div>
                     <div className="max-h-48 overflow-y-auto">

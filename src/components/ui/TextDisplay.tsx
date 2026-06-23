@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { SettingContainer } from "./SettingContainer";
 
 interface TextDisplayProps {
@@ -19,11 +20,12 @@ export const TextDisplay: React.FC<TextDisplayProps> = ({
   value,
   descriptionMode = "tooltip",
   grouped = false,
-  placeholder = "Not available",
+  placeholder,
   copyable = false,
   monospace = false,
   onCopy,
 }) => {
+  const { t } = useTranslation();
   const [showCopied, setShowCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -41,7 +43,7 @@ export const TextDisplay: React.FC<TextDisplayProps> = ({
     }
   };
 
-  const displayValue = value || placeholder;
+  const displayValue = value || placeholder || t("common.notAvailable");
   const textClasses = monospace ? "font-mono break-all" : "break-words";
 
   return (
@@ -55,7 +57,7 @@ export const TextDisplay: React.FC<TextDisplayProps> = ({
       <div className="flex items-center space-x-2">
         <div className="flex-1 min-w-0">
           <div
-            className={`px-2 min-h-8 flex items-center bg-mid-gray/10 border border-mid-gray/80 rounded-md text-xs ${textClasses} ${!value ? "opacity-60" : ""}`}
+            className={`px-2 min-h-8 flex items-center bg-mid-gray/10 border border-mid-gray/15 rounded-lg text-xs ${textClasses} ${!value ? "opacity-60" : ""}`}
           >
             {displayValue}
           </div>
@@ -63,8 +65,8 @@ export const TextDisplay: React.FC<TextDisplayProps> = ({
         {copyable && value && (
           <button
             onClick={handleCopy}
-            className="flex items-center justify-center px-2 py-1 w-12 min-h-8 text-xs font-semibold bg-mid-gray/10 hover:bg-logo-primary/10 border border-mid-gray/80 hover:border-logo-primary hover:text-logo-primary rounded-md transition-all duration-150 flex-shrink-0 cursor-pointer"
-            title="Copy to clipboard"
+            className="flex items-center justify-center px-2 py-1 w-12 min-h-8 text-xs font-semibold bg-mid-gray/10 hover:bg-logo-primary/10 border border-mid-gray/25 hover:border-logo-primary hover:text-logo-primary rounded-lg transition-all duration-150 flex-shrink-0 cursor-pointer"
+            title={t("common.copyToClipboard")}
           >
             {showCopied ? (
               <div className="flex items-center space-x-1">
@@ -83,7 +85,7 @@ export const TextDisplay: React.FC<TextDisplayProps> = ({
                 </svg>
               </div>
             ) : (
-              "Copy"
+              t("common.copy")
             )}
           </button>
         )}

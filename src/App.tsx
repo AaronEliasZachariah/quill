@@ -258,7 +258,7 @@ function App() {
           unstyled: true,
           classNames: {
             toast:
-              "bg-background border border-mid-gray/20 rounded-lg shadow-lg px-4 py-3 flex items-center gap-3 text-sm",
+              "bg-surface border border-mid-gray/15 rounded-xl shadow-sheet px-4 py-3 flex items-center gap-3 text-sm",
             title: "font-medium",
             description: "text-mid-gray",
           },
@@ -275,7 +275,12 @@ function App() {
           <div className="flex-1 overflow-y-auto">
             <div className="flex flex-col items-center p-4 gap-4">
               <AccessibilityPermissions />
-              {renderSettingsContent(currentSection)}
+              <div
+                key={currentSection}
+                className="section-enter w-full flex flex-col items-center"
+              >
+                {renderSettingsContent(currentSection)}
+              </div>
             </div>
           </div>
         </div>
