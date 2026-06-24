@@ -12,10 +12,14 @@ const QuillWordmark = ({
   width = 120,
   className,
   animateStroke = false,
+  showStroke = true,
 }: {
   width?: number;
   className?: string;
   animateStroke?: boolean;
+  /** Show the signature ink stroke under the word. Off when paired with the
+      quill mark, which already carries the stroke. */
+  showStroke?: boolean;
 }) => {
   const fontSize = width * 0.44;
 
@@ -32,12 +36,14 @@ const QuillWordmark = ({
         Quill
       </span>
       {/* eslint-enable i18next/no-literal-string */}
-      <InkStroke
-        className="text-logo-primary -mt-[0.06em]"
-        width={fontSize * 1.78}
-        height={Math.max(7, fontSize * 0.17)}
-        animate={animateStroke}
-      />
+      {showStroke && (
+        <InkStroke
+          className="text-logo-primary -mt-[0.06em]"
+          width={fontSize * 1.78}
+          height={Math.max(7, fontSize * 0.17)}
+          animate={animateStroke}
+        />
+      )}
     </div>
   );
 };

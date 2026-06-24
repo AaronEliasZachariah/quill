@@ -163,6 +163,21 @@ body {
   .section-enter {
     animation: section-rise 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
+
+  /* The quill logo "writes" itself in: the feather settles toward the nib while
+     the nib lays down its ink stroke, so the mark performs the brand idea once
+     on mount. Pivoted near the nib so the motion reads as a pen touching down. */
+  .quill-write .quill-feather {
+    transform-box: fill-box;
+    transform-origin: 12% 96%;
+    animation: quill-feather-write 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .quill-write .quill-ink {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: quill-ink-draw 620ms cubic-bezier(0.65, 0, 0.35, 1) 240ms
+      forwards;
+  }
 }
 
 @keyframes ink-stroke-draw {
@@ -182,6 +197,26 @@ body {
   }
 }
 
+@keyframes quill-feather-write {
+  0% {
+    opacity: 0;
+    transform: translate(2px, -3px) rotate(4deg);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0);
+  }
+}
+
+@keyframes quill-ink-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ink-stroke-draw {
     animation: none;
@@ -189,6 +224,13 @@ body {
   }
   .section-enter {
     animation: none;
+  }
+  .quill-write .quill-feather {
+    animation: none;
+  }
+  .quill-write .quill-ink {
+    animation: none;
+    stroke-dashoffset: 0;
   }
 }
 

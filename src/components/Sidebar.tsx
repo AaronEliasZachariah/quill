@@ -9,7 +9,7 @@ import {
   Cpu,
   Feather,
 } from "lucide-react";
-import QuillWordmark from "./icons/QuillWordmark";
+import QuillProLogo from "./icons/QuillProLogo";
 import { useSettings } from "../hooks/useSettings";
 import {
   GeneralSettings,
@@ -51,6 +51,12 @@ export const SECTIONS_CONFIG = {
     component: ModelsSettings,
     enabled: () => true,
   },
+  postprocessing: {
+    labelKey: "sidebar.postProcessing",
+    icon: Sparkles,
+    component: PostProcessingSettings,
+    enabled: () => true,
+  },
   advanced: {
     labelKey: "sidebar.advanced",
     icon: Cog,
@@ -61,12 +67,6 @@ export const SECTIONS_CONFIG = {
     labelKey: "sidebar.history",
     icon: History,
     component: HistorySettings,
-    enabled: () => true,
-  },
-  postprocessing: {
-    labelKey: "sidebar.postProcessing",
-    icon: Sparkles,
-    component: PostProcessingSettings,
     enabled: () => true,
   },
   debug: {
@@ -102,7 +102,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <div className="flex flex-col w-44 h-full border-e border-mid-gray/15 items-center px-3">
       <div className="py-5">
-        <QuillWordmark width={112} animateStroke />
+        <QuillProLogo width={116} />
       </div>
       <nav className="flex flex-col w-full items-stretch gap-0.5 pt-3 border-t border-mid-gray/15">
         {availableSections.map((section) => {
