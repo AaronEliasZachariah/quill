@@ -290,15 +290,16 @@ pub async fn fetch_models(
     Ok(kept)
 }
 
-/// Names of non-chat model families. Matched case-insensitively as substrings of
-/// the model id; if any marker is present the model is treated as non-chat.
-const NON_CHAT_MODEL_MARKERS: &[&str] = &[
+/// Non-chat model families matched case-insensitively as a *substring* of the
+/// model id. These are stems that legitimately appear inside longer non-chat ids
+/// (e.g. "embed" inside "text-embedding-3-small"), and which don't occur inside
+/// real chat model names — so a plain substring match is safe.
+const NON_CHAT_SUBSTRING_MARKERS: &[&str] = &[
     "embed",          // text-embedding-3-*, nomic-embed-text, …
     "tts",            // tts-1, gpt-4o-mini-tts
     "text-to-speech", // alt naming
     "speech",         // misc speech endpoints
     "whisper",        // whisper-1
-    "transcribe",     // gpt-4o-transcribe, gpt-4o-mini-transcribe
     "audio",          // gpt-4o-audio-preview (audio I/O, not text chat)
     "realtime",       // gpt-4o-realtime-preview
     "dall-e",         // dall-e-3
@@ -314,6 +315,43 @@ const NON_CHAT_MODEL_MARKERS: &[&str] = &[
     "veo",
 ];
 
+/// Non-chat markers matched only as a *whole word* (bounded on each side by the
+/// start/end of the id or a non-alphanumeric character). Unlike the substring
+/// list, these are real English words that show up as a stem inside perfectly
+/// good *chat* model names a user might pick — so matching them as a bare
+/// substring would wrongly hide those models.
+///
+/// "transcribe" is the motivating case: it must catch OpenAI's
+/// `gpt-4o-transcribe` / `gpt-4o-mini-transcribe`, but NOT a local chat model
+/// named e.g. `qwen3-0.6b-transcriber-beta` (a small LLM that *cleans up*
+/// transcripts). Word-boundary matching keeps "…-transcribe" denied while
+/// letting "…-transcriber…" through.
+const NON_CHAT_WORD_MARKERS: &[&str] = &[
+    "transcribe", // gpt-4o-transcribe, gpt-4o-mini-transcribe
+];
+
+/// True if `marker` appears in `haystack` as a complete word — i.e. every
+/// occurrence is bounded on both sides by the start/end of the string or a
+/// non-alphanumeric character. `haystack` and `marker` are expected lowercase.
+fn contains_word(haystack: &str, marker: &str) -> bool {
+    haystack.match_indices(marker).any(|(start, matched)| {
+        let end = start + matched.len();
+        let left_ok = start == 0
+            || !haystack[..start]
+                .chars()
+                .next_back()
+                .unwrap()
+                .is_ascii_alphanumeric();
+        let right_ok = end == haystack.len()
+            || !haystack[end..]
+                .chars()
+                .next()
+                .unwrap()
+                .is_ascii_alphanumeric();
+        left_ok && right_ok
+    })
+}
+
 /// Drop obvious non-chat models (embeddings, TTS, Whisper, image, …) from a raw
 /// `/v1/models` listing, preserving the original order of what remains.
 fn filter_chat_models(models: Vec<String>) -> Vec<String> {
@@ -321,9 +359,50 @@ fn filter_chat_models(models: Vec<String>) -> Vec<String> {
         .into_iter()
         .filter(|id| {
             let lower = id.to_lowercase();
-            !NON_CHAT_MODEL_MARKERS
+            let substring_hit = NON_CHAT_SUBSTRING_MARKERS
                 .iter()
-                .any(|marker| lower.contains(*marker))
+                .any(|marker| lower.contains(*marker));
+            let word_hit = NON_CHAT_WORD_MARKERS
+                .iter()
+                .any(|marker| contains_word(&lower, marker));
+            !(substring_hit || word_hit)
         })
         .collect()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn keeps_chat_models_named_transcriber() {
+        // A local chat LLM whose name contains "transcriber" must survive — the
+        // bare substring "transcribe" used to wrongly drop it.
+        let kept = filter_chat_models(vec!["qwen3-0.6b-transcriber-beta".to_string()]);
+        assert_eq!(kept, vec!["qwen3-0.6b-transcriber-beta".to_string()]);
+    }
+
+    #[test]
+    fn drops_real_transcription_endpoints() {
+        let kept = filter_chat_models(vec![
+            "gpt-4o-transcribe".to_string(),
+            "gpt-4o-mini-transcribe".to_string(),
+            "whisper-1".to_string(),
+        ]);
+        assert!(kept.is_empty(), "expected all transcription models dropped");
+    }
+
+    #[test]
+    fn drops_non_chat_and_keeps_chat() {
+        let kept = filter_chat_models(vec![
+            "text-embedding-3-small".to_string(),
+            "gpt-4o".to_string(),
+            "llama-3.1-8b-instruct".to_string(),
+            "dall-e-3".to_string(),
+        ]);
+        assert_eq!(
+            kept,
+            vec!["gpt-4o".to_string(), "llama-3.1-8b-instruct".to_string()]
+        );
+    }
 }
